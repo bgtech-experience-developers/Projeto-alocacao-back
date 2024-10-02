@@ -1,4 +1,6 @@
-import { instanciaPrisma } from "../database/conexao"
+
+import ColaboradorRepository from "../repositore/ColaboradorRepository"
+const {deletar,unico,criar,atualizar,buscarTodos} = ColaboradorRepository
 const prisma = instanciaPrisma
 
 class ColaboradorController {
@@ -6,15 +8,13 @@ class ColaboradorController {
 
     async mostar(req,res) {
         try{
-            const users =  await prisma.colaborador.findMany()
-            res.send(users)         
-        }catch(erro ){res.send(erro) }
-      
-       
+          const users = await buscarTodos()     
+          res.json(users)  
+        }catch(erro){res.send(erro) }      
     }
 
     async criar(req,res) {
-        return 'Hello'
+        
     }
 
     async atualizar(req,res) {
