@@ -1,7 +1,8 @@
 
-import ColaboradorRepository from '../repositore/ColaboradorRepository.js'
+import ColaboradorRepository from "../repositore/ColaboradorRepository.js"
 
 const {deletar,unico,criar,atualizar,buscarTodos} = ColaboradorRepository
+
 
 
 class ColaboradorController {
@@ -31,7 +32,7 @@ class ColaboradorController {
     async usuarioUnico(req,res){
         try{
             const {cpf} = req.params.id // usa isso ou o query req.query
-            const user = await unico(id)
+            const user = await unico(cpf)
             res.status(200).json(user)
 
         }catch(error){
