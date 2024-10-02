@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 export const instanciaPrisma = new PrismaClient()
 
+
 // export class Conexao{
 //     static prisma
     
@@ -8,7 +9,7 @@ export const instanciaPrisma = new PrismaClient()
 //      static gerarConexao() {
       
 
-//         if(!Conexao.prisma){
+//         if(!Conexao.prisma):PrismaClient{
 //             this.prisma = new PrismaClient() 
 //             console.log(this.prisma)
            
@@ -23,6 +24,7 @@ export const instanciaPrisma = new PrismaClient()
 //     }
 
 // }
-// Conexao.gerarConexao()
+// Conexao.gerarConexao(
+// Conexao.gerarConexao().
 
 
