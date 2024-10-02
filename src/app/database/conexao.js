@@ -1,25 +1,28 @@
 import { PrismaClient } from "@prisma/client";
+export const instanciaPrisma = new PrismaClient()
 
-class Conexao{
-    static prisma
+// export class Conexao{
+//     static prisma
     
 
-     static gerarConexao() {
+//      static gerarConexao() {
       
 
-        if(!Conexao.prisma){
-            this.prisma = new PrismaClient() 
-            console.log(this.prisma)
-            
+//         if(!Conexao.prisma){
+//             this.prisma = new PrismaClient() 
+//             console.log(this.prisma)
+           
         
         
-            console.log(this.prisma)
-        }
-  
-        return this.prisma
+        
+        
+//         }
+        
+//         return this.prisma
 
-    }
+//     }
 
-}
+// }
+// Conexao.gerarConexao()
 
-export default Conexao
+
