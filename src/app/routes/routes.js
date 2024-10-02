@@ -8,4 +8,5 @@ router.get('/get', (req,res) => {
     res.send('Requisição recebida com sucesso!')
 })
 
+
 export default router
