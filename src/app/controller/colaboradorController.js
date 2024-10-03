@@ -60,12 +60,13 @@ class ColaboradorController {
         try{
             const {token}  = req.headers
             const tokenValido = token && token.split(' ')[1]
-
+            console.log(tokenValido)
             if(tokenValido == null ){
                 throw new Error("nao foi possivel validar seu login")
             }
-            // console.log(process.env.SENHAJWT)
-            jwt.verify(token, process.env.SENHAJWT, (err, payload) => {
+           
+            jwt.verify(tokenValido, process.env.SENHAJWT, (err, payload) => {
+
                 if(err){
                     console.log(err)
                     if(err.nome === jwt.TokenExpiredError){

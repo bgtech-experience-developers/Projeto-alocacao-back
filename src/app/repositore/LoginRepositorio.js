@@ -19,7 +19,7 @@ class LoginRepositorio {
                 if(validarSenha){
                     // gera token
                     const token = await tokenUsuario(validarCpf)
-                    console.log('chegou token ', token)
+                    // console.log('chegou token ', token)
                     return token
                 }else{
                     throw new Error('senhas nao coincidem')

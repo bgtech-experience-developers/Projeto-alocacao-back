@@ -6,6 +6,59 @@
     <title>Document</title>
 </head>
 <body>
-    
+    <form id="form" method="POST">
+        <label for="cpf">digite seu cpf</label>
+        <input type="text" placeholder="digite seu cpf" id="cpf" name="cpf" >
+        <label for="senha" >digite sua senha</label>
+        <input type="password" placeholder="digite sua senha" id="senha" name="senha">
+        <button>Entrar</button>
+    </form>
 </body>
+<script>
+    const formulario = document.getElementById('form')
+
+    formulario.addEventListener('submit', (e) => {
+        e.preventDefault()
+        const dataForm = new FormData(formulario)
+        console.log(dataForm)
+        const cpf = dataForm.get('cpf')
+        const senha = dataForm.get('senha')
+        
+        const dadosParaMandar = {
+            cpf:cpf,
+            senha:senha
+        }
+        console.log(dadosParaMandar)
+        fetch('http://localhost:3000/user/login', {
+            method: 'POST',
+            headers:{
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(dadosParaMandar)
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log('formulario enviado com sucesso', data)
+                const token = data
+                localStorage.setItem("token", token)
+            })
+            .catch((error) => {
+                console.log('erro: ', error)
+            })
+            const tokenlerolero = localStorage.getItem("token")
+        fetch('http://localhost:3000/user/perfil', {
+            method: 'GET',
+            headers:{
+                'Content-Type': 'application/json',
+                'token': `bearer ${tokenlerolero}`
+            }
+        })
+        .then(response => response.json())
+        .then(data => console.log(data))
+        .catch((error)=> console.error('erro:', error))
+
+    })
+        
+    
+</script>
 </html>
