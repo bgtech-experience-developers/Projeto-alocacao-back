@@ -1,8 +1,11 @@
 
 import jwt from 'jsonwebtoken'
 import ColaboradorRepository from "../repositore/ColaboradorRepository.js"
+import { EnderecoRepository } from '../repositore/EnderecoRepository.js'
+
 
 const { deletar, unico, criar, atualizar, buscarTodos } = ColaboradorRepository
+
 
 
 
@@ -19,9 +22,12 @@ class ColaboradorController {
 
     async criar(req, res) {
         try {
-            const { cpf, senha, email, nome } = req.body
-            const user = await criar(cpf, senha, email, nome)
-
+            const { cpf, senha, email, nome,nacionalidade,escolaridade,telefone,endereco,bairro,cidade,
+                cep,estado,complemento
+            } = req.body
+            const user = await criar(cpf, senha, email, nome,nacionalidade,escolaridade,telefone)
+            const {id} = user
+          const endereconovo =  await new EnderecoRepository().criar(endereco,bairro,cidade,cep,id,estado,complemento)
             res.json('usuário cadastrado com sucesso ' + user.nome)
 
         } catch (error) {

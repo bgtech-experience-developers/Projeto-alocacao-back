@@ -5,14 +5,14 @@ import bcrypt from 'bcrypt'
 class ColaboradorRepository {
 
 
-    async criar(cpf, senha, email, nome) {
+    async criar(cpf, senha, email, nome,escolaridade,nacionalidade,telefone) {
         try {
             const usuario = await instanciaPrisma.colaborador.findUnique({ where: { cpf, AND: { email } } })
-            // console.log('olaa mundo')
+           
             if (!usuario) {
                 const camadaDeSegurança = 10
                 const senhaCodificada = await bcrypt.hash(senha, camadaDeSegurança)
-                const usuarioCadastrado = await instanciaPrisma.colaborador.create({ data: { cpf, senha: senhaCodificada, email, nome } })
+                const usuarioCadastrado = await instanciaPrisma.colaborador.create({ data: { cpf, senha: senhaCodificada, email, nome,escolaridade,nacionalidade,telefone } })
                 console.log(usuarioCadastrado)
                 return usuarioCadastrado
 

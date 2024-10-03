@@ -19,6 +19,23 @@ model Colaborador {
   cpf String @unique
   email String @unique
   senha String 
+  nacionalidade String
+  escolaridade String
+  telefone Int
+  Endereco Endereco[]
   createdAt DateTime @default(now())
+  updateAt DateTime @default(now())
+}
+model Endereco {
+  id Int @id @default(autoincrement())
+  endereco String
+  bairro String
+  cidade String
+  estado  String
+  complemento String
+  cep String
+  userId Int
+  user Colaborador @relation(fields: [userId],references: [id])
+ createdAt DateTime @default(now())
   updateAt DateTime @default(now())
 }
