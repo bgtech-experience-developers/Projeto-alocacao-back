@@ -21,5 +21,4 @@ model Colaborador {
   senha String 
   createdAt DateTime @default(now())
   updateAt DateTime @default(now())
-
 }
