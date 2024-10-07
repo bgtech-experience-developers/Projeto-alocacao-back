@@ -36,6 +36,18 @@ model Endereco {
   cep String
   userId Int
   user Colaborador @relation(fields: [userId],references: [id])
- createdAt DateTime @default(now())
+  createdAt DateTime @default(now())
+  updateAt DateTime @default(now())
+}
+
+model Escolas {
+  id Int @id @default(autoincrement())
+  nomeEscola String
+  enderecoEscola String
+  qtdSalas Int
+  capacidadeEscola Int
+  capacidadeSala Int
+  alocado Boolean @default(false)
+  createdAt DateTime @default(now())
   updateAt DateTime @default(now())
 }
