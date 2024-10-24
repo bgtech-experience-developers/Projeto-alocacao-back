@@ -1,6 +1,6 @@
 export class CollaboratorError extends Error {
-  private status: number;
-  private constructor(message: string, status: number) {
+  readonly status: number;
+  constructor(message: string, status: number = 400) {
     super(message);
     this.status = status;
   }

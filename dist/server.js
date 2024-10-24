@@ -6,7 +6,7 @@ const app = express();
 const port = process.env.PORTA;
 console.log(port);
 app.use(express.json());
-app.use("/colaborador", route);
+app.use("/colaboradorExterno", route);
 app.listen(port, () => {
     console.log("servidor está rodando na porta +", port);
 });
