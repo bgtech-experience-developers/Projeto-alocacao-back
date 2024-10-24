@@ -1,18 +1,25 @@
-import express from 'express'
-import loginController from '../controller/loginController.js'
+import express from "express";
+import loginController from "../controller/loginController.js";
+import swaggerUiExpress from "swagger-ui-express";
 
+export const rotaUsuario = express.Router();
 
-export const rotaUsuario= express.Router()
+import colaboradorController from "../controller/colaboradorController.js";
+const { usuarioLogado } = loginController;
+const {
+  criar,
+  atualizar,
+  deletar,
+  mostar,
+  usuarioUnico,
+  autenticacao,
+  perfil,
+} = colaboradorController;
+rotaUsuario.get("/pegar-todos", mostar);
 
-import colaboradorController from '../controller/colaboradorController.js'
-const { usuarioLogado } =  loginController
-const {criar,atualizar,deletar,mostar,usuarioUnico, autenticacao, perfil} = colaboradorController
-rotaUsuario.get('/pegar-todos',mostar)
-rotaUsuario.post('/cadastro',criar)
-rotaUsuario.get('/usuário-unico',usuarioUnico)
-rotaUsuario.patch('/atualizar-usuário',atualizar)
-rotaUsuario.delete('/deletar-usuario',deletar)
-rotaUsuario.post('/login', usuarioLogado)
-rotaUsuario.get('/perfil', autenticacao, perfil)
-
-
+rotaUsuario.post("/cadastro", criar);
+rotaUsuario.get("/usuarioUnico/:id", usuarioUnico);
+rotaUsuario.patch("/atualizarUsuário", atualizar);
+rotaUsuario.delete("/deletarUsuario/:cpf", deletar);
+rotaUsuario.post("/login", usuarioLogado);
+rotaUsuario.get("/perfil", autenticacao, perfil);

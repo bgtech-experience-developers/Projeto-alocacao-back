@@ -1,0 +1,123 @@
+{
+  "openapi": "3.0.0",
+
+  "info": {
+    "version": "1.0.0",
+    "title": "PROJETO ALOCAÇÃO",
+    "description": "api suporte  para uma alocação de pessoas",
+    "contact": { "url": "lucassilvadpa@gmail.com", "name": "lucas silva" }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000",
+      "description": "servidor serviço alocação"
+    }
+  ],
+  "paths": {
+    "/user/pegar-todos": {
+      "get": {
+        "tags": ["usuário"],
+        "summary": "listagem de todos os usuários registados",
+        "description": "lista cada usuário cadastrado dentro do banco de dados na tabela colaboradores",
+
+        "responses": {
+          "200": {
+            "description": "busca de todos os usuários realizada com sucesso"
+          },
+          "500": { "description": "erro interno de servidor" }
+        }
+      }
+    },
+    "/user/usuarioUnico/{id}": {
+      "get": {
+        "tags": ["usuário"],
+        "summary": "LISTA 1 USUÁRIO SOMENTE",
+        "description": "RESGATA UM ÚNICO USUÁRIO PELO SEU IDENTIFICADOR ÚNICO = ID",
+        "parameters": [
+          {
+            "required": true,
+            "in": "path",
+            "name": "id",
+            "description": "id do usuário",
+            "example": "tipo um número aleatório como : 1,2....."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "usuário resgatado com sucesso"
+          },
+          "400": { "description": "usuário não encontrado" },
+          "500": {
+            "description": "erro interno de servidor"
+          }
+        }
+      }
+    },
+    "/user/cadastro": {
+      "post": {
+        "tags": ["usuário"],
+        "summary": "cadastro de usuário",
+        "description": "rota destinada ao cadastreamento de um usuário dentro do modelo de colaboradores",
+
+        "requestBody": {
+          "required": true,
+          "description": "necessário passar informações para que o cadastreamento seja possivel",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "usuário cadastrado com sucesso" },
+          "400": { "description": "usuário ja registado no sistema" },
+          "500": { "description": "erro interno do servidor" }
+        }
+      }
+    },
+    "/user/deletarUsuario/{cpf}": {
+      "delete": {
+        "summary": "deletar um usuário especifico",
+        "description": "objetivo da rota é deletar um usuário na tabela de colaboradores através de cpf passado por parametro ",
+        "tags": ["usuário"],
+        "parameters": [
+          {
+            "required": true,
+            "in": "path",
+            "description": "cooloque o cpf para deletar o usuário",
+            "example": "coloque o cpf do usuário",
+            "name": "cpf"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "usuário deletado com sucesso"
+          },
+          "400": {
+            "description": "usuário nao existente"
+          },
+          "500": {
+            "description": "erro interno do servidor"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "cpf": {
+            "type": "string"
+          },
+          "nome": { "type": "string" },
+          "email": { "type": "string" },
+          "senha": { "type": "string" }
+        }
+      }
+    }
+  }
+}
