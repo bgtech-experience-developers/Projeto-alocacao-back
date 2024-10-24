@@ -1,0 +1,1 @@
+{"version":3,"file":"CollaboratorError.js","sourceRoot":"","sources":["../../src/app/error/CollaboratorError.ts"],"names":[],"mappings":"AAAA,MAAM,OAAO,iBAAkB,SAAQ,KAAK;IAClC,MAAM,CAAS;IACvB,YAAoB,OAAe,EAAE,MAAc;QACjD,KAAK,CAAC,OAAO,CAAC,CAAC;QACf,IAAI,CAAC,MAAM,GAAG,MAAM,CAAC;IACvB,CAAC;CACF"}
