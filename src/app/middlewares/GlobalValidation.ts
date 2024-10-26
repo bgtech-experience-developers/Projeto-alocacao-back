@@ -11,7 +11,13 @@ export const CollaboratorInner = (
     try {
       if (body && typeof body === "object") {
         const properties = Object.keys(body);
-        if (checkInterfaceCreate<CreateCollaborator>(body, ...properties)) {
+        if (
+          checkInterfaceCreate<CreateCollaborator>(
+            body,
+            "casinha",
+            "createCollaboratorInner"
+          )
+        ) {
           request.body = body;
           next();
         } else {
