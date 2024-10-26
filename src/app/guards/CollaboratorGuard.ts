@@ -29,12 +29,15 @@ const abc = 10;
 
 export const checkInterfaceCreate = <$Interface>(
   body: unknown,
-  type: keyof AllInterfaces,
+
   actionFunction: keyof ValidatorCollaborator
 ): body is $Interface => {
   //uma função para trazer o objeto da interface
-  const InterfaceData = GlobalDataInterfaces.Create();
+  const InterfaceData: unknown = GlobalDataInterfaces.Create();
   const Clientfunct = new ValidatorCollaborator();
   //uma função para fazer a validação dos campos e do tipo do objeto da interface em conjunto com o do body
-  return Clientfunct[actionFunction](10, InterfaceData);
+  return Clientfunct[actionFunction](
+    body as any,
+    InterfaceData as AllInterfaces
+  );
 };

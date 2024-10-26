@@ -1,10 +1,18 @@
 export class ValidatorCollaborator {
   createCollaboratorInner(
-    bodyCreate: unknown,
+    body: AllInterfaces["BodyCreateCollaboratorInner"],
     expectedDate: AllInterfaces
   ): boolean {
-    return true;
+    if (
+      typeof body.name === typeof expectedDate.BodyCreateCollaboratorInner.name
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+    //quando eu chegar faço essa validaçãore
   }
+
   createCollaboratorExtERNO(
     bodyCreate: unknown,
     expectedDate: AllInterfaces
