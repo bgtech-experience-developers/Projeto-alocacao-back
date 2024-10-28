@@ -1,6 +1,6 @@
 import { CollaboratorError } from "../error/CollaboratorError.js";
 import { TypeGuardCollaboratorInner } from "../guards/CollaboratorGuard.js";
-const { typeGuardCollaboratorInnerCreate, typeGuardCollaboratorInnerDelete } = new TypeGuardCollaboratorInner();
+const { typeGuardCollaboratorInnerCreate, typeGuardCollaboratorInnerDeleteAndGetUnique, } = new TypeGuardCollaboratorInner();
 export class ValidatorCollaboratorInner {
     static CollaboratorInnerCreate(req, response, next) {
         try {
@@ -15,9 +15,11 @@ export class ValidatorCollaboratorInner {
             next(error);
         }
     }
-    static CollaboratorInnerDelete(req, response, next) {
+    static CollaboratorInnerDeleteAndGetUnique(req, response, next) {
         try {
-            const { error, value } = typeGuardCollaboratorInnerDelete().validate(req.params);
+            const { error, value } = typeGuardCollaboratorInnerDeleteAndGetUnique().validate({
+                id: Number(req.params.id),
+            });
             if (error) {
                 throw new CollaboratorError("dado não suportado para o campo", 400);
             }

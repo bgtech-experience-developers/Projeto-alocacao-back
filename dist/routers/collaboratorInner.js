@@ -6,7 +6,10 @@ import { ControllerCollaboratorInner } from "../controllers/CollaboratorInterno.
 export const route = express.Router();
 route.get("/buscarTodos", ControllerCollaboratorInner.getAllCollaborators);
 route.post("/criar", ValidatorCollaboratorInner.CollaboratorInnerCreate, ControllerCollaboratorInner.createCollaboratorInner);
-route.delete("/deletar/:id", ValidatorCollaboratorInner.CollaboratorInnerDelete, ControllerCollaboratorInner.DeleteUniqueCollaborator);
-route.get("/unico/:id", ControllerCollaboratorInner.GetUniqueCollaborator);
+route.delete("/deletar/:id", ValidatorCollaboratorInner.CollaboratorInnerDeleteAndGetUnique, ControllerCollaboratorInner.DeleteUniqueCollaborator);
+route.get("/unico/:id", ValidatorCollaboratorInner.CollaboratorInnerDeleteAndGetUnique, ControllerCollaboratorInner.GetUniqueCollaborator);
+route.put("/atualizar", () => {
+    "futuramente vc me aguarda";
+});
 route.use(handleError);
 //# sourceMappingURL=collaboratorInner.js.map

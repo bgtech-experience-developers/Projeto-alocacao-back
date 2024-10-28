@@ -3,7 +3,7 @@
 import { Handler } from "express";
 
 import { objectEnumNames } from "@prisma/client/runtime/library";
-import { ValidatorCollaborator } from "../validators/CollobaratorInner.js";
+
 import Joi from "joi";
 export class TypeGuardCollaboratorInner {
   typeGuardCollaboratorInnerCreate() {
@@ -63,7 +63,7 @@ export class TypeGuardCollaboratorInner {
 
     return CollaboratorInnerSchema;
   }
-  typeGuardCollaboratorInnerDelete() {
+  typeGuardCollaboratorInnerDeleteAndGetUnique() {
     const CollaboratorInnerSchema = Joi.object<ParamsId, true, ParamsId>({
       id: Joi.number().positive().required(),
     });

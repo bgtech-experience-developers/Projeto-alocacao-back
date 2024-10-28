@@ -27,8 +27,13 @@ export class ControllerCollaboratorInner {
   ) {
     try {
       const allCollaborators = await ServiceCollaborator.getAll();
+      console.log(allCollaborators);
 
-      response.status(201).json(allCollaborators);
+      if (allCollaborators instanceof Array) {
+        allCollaborators[0] === undefined
+          ? response.status(201).json("não existe nenhum registro")
+          : response.status(200).json(allCollaborators);
+      }
     } catch (error) {
       next(error);
     }
@@ -38,9 +43,29 @@ export class ControllerCollaboratorInner {
     response: Response,
     next: NextFunction
   ) {
-    const params = request.params;
-    console.log(params);
-    response.json("tudo bem");
+    try {
+      const id = Number(request.params.id);
+
+      const GetUniqueCollaborator = await ServiceCollaborator.getUnique(id);
+      response.json(GetUniqueCollaborator).status(201);
+    } catch (error) {
+      next(error);
+    }
   }
-  static async DeleteUniqueCollaborator() {}
+  static async DeleteUniqueCollaborator(
+    request: Request,
+    response: Response,
+    next: NextFunction
+  ) {
+    try {
+      const id = Number(request.params.id);
+
+      const delCollaborator = await ServiceCollaborator.del(id);
+
+      response.status(201).json({ collaboratorDel: delCollaborator.name });
+    } catch (error) {
+      next(error);
+    }
+  }
+  static LoginAdmCollaborator() {}
 }

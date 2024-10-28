@@ -25,4 +25,28 @@ export class ServiceCollaborator {
       throw error;
     }
   }
+  static async del(id: number) {
+    try {
+      const CollboratorDel = await GetUnique(id);
+      console.log(CollboratorDel);
+      if (!CollboratorDel) {
+        throw new CollaboratorError("colaborador não existe", 400);
+      }
+
+      return await del(id);
+    } catch (error) {
+      throw error;
+    }
+  }
+  static async getUnique(id: number): Promise<CreateCollaboratorInner> {
+    try {
+      const collaborator = await GetUnique(id);
+      if (!collaborator) {
+        throw new CollaboratorError("colaborador não existente", 400);
+      }
+      return collaborator;
+    } catch (error) {
+      throw error;
+    }
+  }
 }

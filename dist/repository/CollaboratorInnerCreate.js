@@ -31,14 +31,31 @@ export class CollaboratorInnerRepository {
             throw error;
         }
     }
-    async GetUnique(id, cpf) {
-        const connectionExist = await InstanciaPrismas.createConnection();
-        const collaborator = await connectionExist.collaborator_Inner.findUnique({
-            where: { id },
-        });
-        return collaborator;
+    async GetUnique(id) {
+        try {
+            const connectionExist = await InstanciaPrismas.createConnection();
+            const collaborator = await connectionExist.collaborator_Inner.findUnique({
+                where: { id },
+            });
+            return collaborator;
+        }
+        catch (error) {
+            throw error;
+        }
     }
-    async del(id) { }
+    async del(id) {
+        try {
+            const connectionExist = await InstanciaPrismas.createConnection();
+            const CollaboratorDel = await connectionExist.collaborator_Inner.delete({
+                where: { id },
+            });
+            return CollaboratorDel;
+        }
+        catch (error) {
+            console.log(error);
+            throw error;
+        }
+    }
     async update() {
         //futuramente implementado
     }

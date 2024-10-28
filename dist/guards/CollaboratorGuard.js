@@ -47,7 +47,7 @@ export class TypeGuardCollaboratorInner {
         });
         return CollaboratorInnerSchema;
     }
-    typeGuardCollaboratorInnerDelete() {
+    typeGuardCollaboratorInnerDeleteAndGetUnique() {
         const CollaboratorInnerSchema = Joi.object({
             id: Joi.number().positive().required(),
         });

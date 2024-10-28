@@ -13,8 +13,15 @@ route.post(
 );
 route.delete(
   "/deletar/:id",
-  ValidatorCollaboratorInner.CollaboratorInnerDelete,
+  ValidatorCollaboratorInner.CollaboratorInnerDeleteAndGetUnique,
   ControllerCollaboratorInner.DeleteUniqueCollaborator
 );
-route.get("/unico/:id", ControllerCollaboratorInner.GetUniqueCollaborator);
+route.get(
+  "/unico/:id",
+  ValidatorCollaboratorInner.CollaboratorInnerDeleteAndGetUnique,
+  ControllerCollaboratorInner.GetUniqueCollaborator
+);
+route.put("/atualizar", () => {
+  "futuramente vc me aguarda";
+});
 route.use(handleError);

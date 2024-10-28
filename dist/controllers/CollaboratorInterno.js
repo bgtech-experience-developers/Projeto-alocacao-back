@@ -14,17 +14,37 @@ export class ControllerCollaboratorInner {
     static async getAllCollaborators(request, response, next) {
         try {
             const allCollaborators = await ServiceCollaborator.getAll();
-            response.status(201).json(allCollaborators);
+            console.log(allCollaborators);
+            if (allCollaborators instanceof Array) {
+                allCollaborators[0] === undefined
+                    ? response.status(201).json("não existe nenhum registro")
+                    : response.status(200).json(allCollaborators);
+            }
         }
         catch (error) {
             next(error);
         }
     }
     static async GetUniqueCollaborator(request, response, next) {
-        const params = request.params;
-        console.log(params);
-        response.json("tudo bem");
+        try {
+            const id = Number(request.params.id);
+            const GetUniqueCollaborator = await ServiceCollaborator.getUnique(id);
+            response.json(GetUniqueCollaborator).status(201);
+        }
+        catch (error) {
+            next(error);
+        }
     }
-    static async DeleteUniqueCollaborator() { }
+    static async DeleteUniqueCollaborator(request, response, next) {
+        try {
+            const id = Number(request.params.id);
+            const delCollaborator = await ServiceCollaborator.del(id);
+            response.status(201).json({ collaboratorDel: delCollaborator.name });
+        }
+        catch (error) {
+            next(error);
+        }
+    }
+    static LoginAdmCollaborator() { }
 }
 //# sourceMappingURL=CollaboratorInterno.js.map
