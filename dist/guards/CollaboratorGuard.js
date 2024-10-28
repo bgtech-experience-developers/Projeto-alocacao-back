@@ -1,31 +1,57 @@
 //terá acesso as interfaces globais definidas, ou até mesmo podemos definir as interfaces locais............
-import { GlobalDataInterfaces } from "../core/InterfacesData.js";
-import { ValidatorCollaborator } from "../validators/CollobaratorInner.js";
-//temos duas formas de realizar essa funcionalidade de interfaces, tanto globais quanto locais. localmente seria definida dentro de um arquivo e somente aquele arquivo tem o poder de acessar ja globalmente todos os arquivos tem esse poder de manipular e acessar. qual o beneficio de ser global? qualquer parte do programa terá acesso poupando fazer uma importação de tal interface ou type lados negativos, caso você tenha determinado um nome de uma interface localmente idêntico a um definido globalmente e caso vc puxe essa interface global para  o mesmo arquivo no qual a  ja exista uma interface local com o mesmo nome, irá ocorrer um overwrite, a local irá literalmente sobrescrever a global..... então decidam qual abordagem querem utilizar.
-const abc = 10;
-// export const checkInterfaceCreate = <$Interface>(
-//   value: unknown,
-//   ...properties: string[] // fazer uma validação dos tipos de dados que estão senddo enviados
-// ): value is $Interface => {
-//   if (value && typeof value === "object") {
-//     const property = properties.find((props) => {
-//       if (!(props in value)) {
-//         return true;
-//       }
-//     });
-//     if (property) {
-//       return false;
-//     } else {
-//       return true;
-//     }
-//   }
-//   return false;
-// };
-export const checkInterfaceCreate = (body, actionFunction) => {
-    //uma função para trazer o objeto da interface
-    const InterfaceData = GlobalDataInterfaces.Create();
-    const Clientfunct = new ValidatorCollaborator();
-    //uma função para fazer a validação dos campos e do tipo do objeto da interface em conjunto com o do body
-    return Clientfunct[actionFunction](body, InterfaceData);
-};
+import Joi from "joi";
+export class TypeGuardCollaboratorInner {
+    typeGuardCollaboratorInnerCreate() {
+        const CollaboratorInnerSchema = Joi.object({
+            pis: Joi.string().required().min(11).max(11).trim(),
+            cpf: Joi.string()
+                .min(11)
+                .max(11)
+                .required()
+                .custom((value, helpers) => {
+                const valueTrim = value.trim();
+                //caso value trim seja undefind, quer dizer que ele ta vazio então o ou ali, pegará um valor verdadeiro
+                return (valueTrim ||
+                    helpers.error("o campo de cpf não pode está vazio, ele é obrigatório"));
+            }),
+            rg: Joi.string().max(35).required().trim(),
+            renova: Joi.number().integer().required(),
+            name: Joi.string().max(75).required().trim(),
+            address: Joi.string().max(75).required().trim(),
+            neighborhood: Joi.string().max(40).required().trim(),
+            complement: Joi.string().max(40).optional().trim(),
+            cep: Joi.string().min(8).max(8).required().trim(),
+            sex: Joi.number().integer().min(1).max(3).required(),
+            education: Joi.number().integer().required(),
+            phone1: Joi.string().required().required().max(20).required(),
+            cell_phone1: Joi.string().required().max(20).required(),
+            phone2: Joi.string().required().max(15).required(),
+            cell_phone2: Joi.string().required().max(15).required(),
+            cod_bank: Joi.number().integer().max(3).required(),
+            agency: Joi.string().required().max(20),
+            account: Joi.string().required().max(20),
+            type_account: Joi.number().integer().optional(),
+            variation: Joi.number().integer().optional(),
+            email: Joi.string().email().max(50).required(),
+            work: Joi.string().max(3).required(),
+            type: Joi.string().max(20).required(),
+            organ: Joi.number().integer().required(),
+            position: Joi.string().required().max(60),
+            registration: Joi.string().required().max(20),
+            sector: Joi.string().required().max(60),
+            experience1: Joi.string().max(150).optional(),
+            experience2: Joi.string().max(150).required(),
+            experience3: Joi.string().max(150).required(),
+            location_proof: Joi.string().max(90).required(),
+            password: Joi.string().max(100),
+        });
+        return CollaboratorInnerSchema;
+    }
+    typeGuardCollaboratorInnerDelete() {
+        const CollaboratorInnerSchema = Joi.object({
+            id: Joi.number().positive().required(),
+        });
+        return CollaboratorInnerSchema;
+    }
+}
 //# sourceMappingURL=CollaboratorGuard.js.map

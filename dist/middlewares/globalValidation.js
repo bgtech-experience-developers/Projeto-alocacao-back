@@ -1,41 +1,31 @@
 import { CollaboratorError } from "../error/CollaboratorError.js";
-import { checkInterfaceCreate } from "../guards/CollaboratorGuard.js";
-export const CollaboratorInner = (request, response, next) => {
-    const create = (body) => {
+import { TypeGuardCollaboratorInner } from "../guards/CollaboratorGuard.js";
+const { typeGuardCollaboratorInnerCreate, typeGuardCollaboratorInnerDelete } = new TypeGuardCollaboratorInner();
+export class ValidatorCollaboratorInner {
+    static CollaboratorInnerCreate(req, response, next) {
         try {
-            if (body && typeof body === "object") {
-                const properties = Object.keys(body);
-                if (checkInterfaceCreate(body, "createCollaboratorInner")) {
-                    request.body = body;
-                    next();
-                }
-                else {
-                    throw new CollaboratorError("campos invalidos", 400);
-                }
+            const { error, value } = typeGuardCollaboratorInnerCreate().validate(req.body);
+            if (error) {
+                throw new CollaboratorError("campos invalidos", 400);
             }
+            req.body = value;
+            next();
         }
         catch (error) {
             next(error);
         }
-    };
-};
-export class ValidatorCreate {
-    static createCollaboratorInner(req, response, next) {
+    }
+    static CollaboratorInnerDelete(req, response, next) {
         try {
-            console.log("eu chego aqui");
-            if (req.body && typeof req.body === "object") {
-                if (checkInterfaceCreate(req.body, "createCollaboratorInner")) {
-                    next();
-                }
-                else {
-                    throw new CollaboratorError("campos invalidos", 400);
-                }
+            const { error, value } = typeGuardCollaboratorInnerDelete().validate(req.params);
+            if (error) {
+                throw new CollaboratorError("dado não suportado para o campo", 400);
             }
+            next();
         }
         catch (error) {
             next(error);
         }
     }
 }
-// const del = (id: unknown) => {};
 //# sourceMappingURL=GlobalValidation.js.map

@@ -5,10 +5,7 @@ import { route } from "./routers/collaboratorInner.js";
 const app = express();
 const port = process.env.PORTA;
 app.use(express.json());
-app.use("/colaboradorInterno", route);
-app.get("/chegar", (req, res) => {
-    res.json("chegou aqui");
-});
+app.use("/colaborador", route);
 app.listen(3500, () => {
     console.log("servidor está rodando na porta +", port);
 });

@@ -1,14 +1,20 @@
-import express from "express";
-import { CollaboratorInner } from "../middlewares/GlobalValidation.js";
-import { ValidatorCreate } from "../middlewares/GlobalValidation.js";
+import express, { response } from "express";
+import { ValidatorCollaboratorInner } from "../middlewares/GlobalValidation.js";
+// import { ValidatorCreate } from "../middlewares/GlobalValidation.js";
 import { handleError } from "../middlewares/HandleError.js";
-import { CollaboratorInterno } from "../controllers/CollaboratorInterno.js";
+import { ControllerCollaboratorInner } from "../controllers/CollaboratorInterno.js";
+import { Request, Response } from "express";
 export const route = express.Router();
-route.get("/buscar");
+route.get("/buscarTodos", ControllerCollaboratorInner.getAllCollaborators);
 route.post(
   "/criar",
-  ValidatorCreate.createCollaboratorInner,
-  new CollaboratorInterno().createCollaboratorInner
+  ValidatorCollaboratorInner.CollaboratorInnerCreate,
+  ControllerCollaboratorInner.createCollaboratorInner
 );
-route.delete("/deletar");
+route.delete(
+  "/deletar/:id",
+  ValidatorCollaboratorInner.CollaboratorInnerDelete,
+  ControllerCollaboratorInner.DeleteUniqueCollaborator
+);
+route.get("/unico/:id", ControllerCollaboratorInner.GetUniqueCollaborator);
 route.use(handleError);

@@ -10,5 +10,6 @@ export const handleError = (
     response.status(error.status).json({ message: error.message });
     return;
   }
+
   response.status(500).json("erro interno de servidor");
 };

@@ -1,18 +1,44 @@
+import { boolean } from "joi";
 import { InstanciaPrismas } from "../connection/InstanciaPrisma.js";
+import bycript from "bcrypt";
 export class CollaboratorInnerRepository {
-  async create(body: CreateCollaborator) {
+  async create(body: CreateCollaboratorInner) {
     try {
-      const connectionExist = await InstanciaPrismas.createConnection();
+      const connectionExist = await InstanciaPrismas.createConnection(); // criando uma conexão com o banco de dados atraves de uma classe
+      const passwordHash = bycript.hashSync(body.password, 10);
       const collaborator = await connectionExist.collaborator_Inner.create({
-        data: { ...body },
+        data: { ...body, password: passwordHash },
       });
-      return collaborator;
+      console.log(collaborator.password);
+      return collaborator as CreateCollaboratorInner;
     } catch (error) {
       throw error;
     }
   }
-  async getAll() {}
-  async del() {}
+  async getAll(cpf?: string) {
+    try {
+      const connectionExist = await InstanciaPrismas.createConnection();
+      if (cpf) {
+        //somente verificar se existe algum registro de um colaborador
+        const UniqueCollaborator =
+          await connectionExist.collaborator_Inner.findUnique({
+            where: { cpf },
+          });
+        return UniqueCollaborator;
+      }
+      return await connectionExist.collaborator_Inner.findMany();
+    } catch (error) {
+      throw error;
+    }
+  }
+  async GetUnique(id?: number, cpf?: string) {
+    const connectionExist = await InstanciaPrismas.createConnection();
+    const collaborator = await connectionExist.collaborator_Inner.findUnique({
+      where: { id },
+    });
+    return collaborator;
+  }
+  async del(id: number) {}
   async update() {
     //futuramente implementado
   }
