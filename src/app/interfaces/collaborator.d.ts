@@ -32,6 +32,10 @@ interface CreateCollaboratorInner {
   experience3: string;
   location_proof: string;
 }
+interface login {
+  email: string;
+  password: string;
+}
 
 interface ParamsId {
   id: number;

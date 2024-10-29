@@ -13,7 +13,31 @@ datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
+model admin{
+  id Int @id @default(autoincrement())
+  name String @db.VarChar(40)
+  password String
+  email String @unique
+  admin_roles Admin_roles[]
+  created_at DateTime @default(now())
+   uptade_at DateTime @default(now())
+}
+model Admin_roles{
+  adminID Int
+  rolesID Int
+  adminEntity admin @relation(fields: [adminID],references: [id])
+  rolesEntity roles @relation(fields: [rolesID],references: [id])
+@@id([adminID,rolesID])
+}
 
+model roles{
+ id Int @id @default(autoincrement())
+ name String
+ permisson String
+ admin_roles Admin_roles[]
+created_at DateTime @default(now())
+uptade_at DateTime @default(now())
+}
 model Collaborator_Inner{
   id Int @id @default(autoincrement())
   cpf String @db.VarChar(11) @unique

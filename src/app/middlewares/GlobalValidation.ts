@@ -5,6 +5,7 @@ import Joi from "joi";
 const {
   typeGuardCollaboratorInnerCreate,
   typeGuardCollaboratorInnerDeleteAndGetUnique,
+  typeguardLogin,
 } = new TypeGuardCollaboratorInner();
 export class ValidatorCollaboratorInner {
   static CollaboratorInnerCreate(
@@ -38,6 +39,17 @@ export class ValidatorCollaboratorInner {
         });
       if (error) {
         throw new CollaboratorError("dado não suportado para o campo", 400);
+      }
+      next();
+    } catch (error) {
+      next(error);
+    }
+  }
+  static loginValidation(req: Request, response: Response, next: NextFunction) {
+    try {
+      const { value, error } = typeguardLogin().validate(req.body);
+      if (error) {
+        throw new CollaboratorError("email e senha são necessários", 400);
       }
       next();
     } catch (error) {

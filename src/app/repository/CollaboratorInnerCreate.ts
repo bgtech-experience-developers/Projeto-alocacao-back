@@ -1,11 +1,15 @@
 import { boolean } from "joi";
 import { InstanciaPrismas } from "../connection/InstanciaPrisma.js";
 import bycript from "bcrypt";
+import { HashSenha } from "../utils/Bycrpt.js";
 export class CollaboratorInnerRepository {
   async create(body: CreateCollaboratorInner) {
     try {
       const connectionExist = await InstanciaPrismas.createConnection(); // criando uma conexão com o banco de dados atraves de uma classe
-      const passwordHash = bycript.hashSync(body.password, 10);
+      const passwordHash = await HashSenha.createPasswordCript(
+        body.password,
+        10
+      );
       const collaborator = await connectionExist.collaborator_Inner.create({
         data: { ...body, password: passwordHash },
       });

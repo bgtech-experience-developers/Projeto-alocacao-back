@@ -3,7 +3,7 @@ import { ValidatorCollaboratorInner } from "../middlewares/GlobalValidation.js";
 // import { ValidatorCreate } from "../middlewares/GlobalValidation.js";
 import { handleError } from "../middlewares/HandleError.js";
 import { ControllerCollaboratorInner } from "../controllers/CollaboratorInterno.js";
-import { Request, Response } from "express";
+
 export const route = express.Router();
 route.get("/buscarTodos", ControllerCollaboratorInner.getAllCollaborators);
 route.post(
@@ -16,6 +16,7 @@ route.delete(
   ValidatorCollaboratorInner.CollaboratorInnerDeleteAndGetUnique,
   ControllerCollaboratorInner.DeleteUniqueCollaborator
 );
+
 route.get(
   "/unico/:id",
   ValidatorCollaboratorInner.CollaboratorInnerDeleteAndGetUnique,

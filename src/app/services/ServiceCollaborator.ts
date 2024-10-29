@@ -49,4 +49,8 @@ export class ServiceCollaborator {
       throw error;
     }
   }
+  static async CreateToken(body: login) {
+    try {
+    } catch (error) {}
+  }
 }

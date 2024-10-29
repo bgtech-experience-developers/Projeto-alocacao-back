@@ -69,4 +69,11 @@ export class TypeGuardCollaboratorInner {
     });
     return CollaboratorInnerSchema;
   }
+  typeguardLogin() {
+    const loginSchema = Joi.object<login, true, login>({
+      email: Joi.string().email().required(),
+      password: Joi.string().email().required(),
+    });
+    return loginSchema;
+  }
 }

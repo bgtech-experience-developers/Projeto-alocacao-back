@@ -67,5 +67,15 @@ export class ControllerCollaboratorInner {
       next(error);
     }
   }
-  static LoginAdmCollaborator() {}
+  static LoginAdmCollaborator(
+    request: Request,
+    response: Response,
+    next: NextFunction
+  ) {
+    try {
+      const token = ServiceCollaborator.CreateToken(request.body as login);
+    } catch (error) {
+      next(error);
+    }
+  }
 }
