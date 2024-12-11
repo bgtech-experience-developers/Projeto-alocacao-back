@@ -1,5 +1,15 @@
 import { NextFunction, Request, Response } from "express";
 import { ServiceAdmin } from "../services/ServiceAdmin.js";
+import { Collaborator } from "../middlewares/CollaboratorValidator.js";
+import { CollaboratorError } from "../error/CollaboratorError.js";
+import { admin } from "@prisma/client";
+import { Admin } from "../repository/AdminRepository.js";
+interface Permissions {
+  criar: string;
+  deletar: string;
+  atualizar: string;
+  ler: string;
+}
 export class AdminController {
   private ServiceAdmin: ServiceAdmin = new ServiceAdmin();
 
@@ -12,7 +22,24 @@ export class AdminController {
       next(error);
     }
   }
-  async create() {}
+  create = () => {
+    return async (request: Request, response: Response, next: NextFunction) => {
+      try {
+        const allpermission = request.body.allpermission as number[];
+        console.log(
+          "essas são ar permissions em formato de numero ",
+          allpermission
+        );
+        const bodyAdmin: Admin = request.body;
+        const mensagem = await this.ServiceAdmin.create(
+          bodyAdmin,
+          allpermission
+        );
+      } catch (error) {
+        next(error);
+      }
+    };
+  };
 
   async del() {}
   async update() {}

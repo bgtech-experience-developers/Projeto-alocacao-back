@@ -3,6 +3,7 @@
 import { Handler } from "express";
 
 import { objectEnumNames } from "@prisma/client/runtime/library";
+import { Admin } from "../repository/AdminRepository.js";
 
 import Joi from "joi";
 export class TypeGuardCollaboratorInner {
@@ -72,8 +73,18 @@ export class TypeGuardCollaboratorInner {
   typeguardLogin() {
     const loginSchema = Joi.object<login, true, login>({
       email: Joi.string().email().required(),
-      password: Joi.string().email().required(),
+      password: Joi.string().required(),
     });
     return loginSchema;
+  }
+  typeguardCreateAdm() {
+    const createAdm = Joi.object<Admin, false, Admin>({
+      email: Joi.string().email().required().messages({
+        "string.email": "email está numa formatação incorreta",
+      }),
+      name: Joi.string(),
+      password: Joi.string().pattern(new RegExp("^[a-zA-Z0-9]{3,30}$")),
+    });
+    return createAdm;
   }
 }

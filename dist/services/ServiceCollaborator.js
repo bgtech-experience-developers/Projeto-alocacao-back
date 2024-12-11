@@ -46,5 +46,10 @@ export class ServiceCollaborator {
             throw error;
         }
     }
+    static async CreateToken(body) {
+        try {
+        }
+        catch (error) { }
+    }
 }
 //# sourceMappingURL=ServiceCollaborator.js.map

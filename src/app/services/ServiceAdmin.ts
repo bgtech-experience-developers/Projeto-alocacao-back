@@ -1,5 +1,6 @@
+import { admin } from "@prisma/client";
 import { CollaboratorError } from "../error/CollaboratorError.js";
-import { AdminRepository } from "../repository/AdminRepository.js";
+import { Admin, AdminRepository } from "../repository/AdminRepository.js";
 import { HashSenha } from "../utils/Bycrpt.js";
 import { JwtToken } from "../utils/Jwt.js";
 import { roles } from "../utils/Jwt.js";
@@ -26,8 +27,22 @@ export class ServiceAdmin {
         { name: "admin", permisson: "create" },
       ]; //simulação dos papeis dos administradores em memória
       return JwtToken.createToken({ ...admin, Role });
+    } catch (error) {
+      throw error;
+    }
+  }
+  async create(body: Admin, perminssions: number[]) {
+    try {
+      const adminRegister = await this.AdminRepository.getUnique(
+        undefined,
+        body.email
+      );
+      if (adminRegister) {
+        throw new CollaboratorError("adminstrador ja registrado no sistema");
+      }
+      body.password = await HashSenha.createPasswordCript(body.password, 10);
 
-      return "lucas";
+      return this.AdminRepository.create(body, perminssions);
     } catch (error) {
       throw error;
     }

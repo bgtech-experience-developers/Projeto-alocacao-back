@@ -7,3 +7,4 @@ const { login, create } = new AdminController();
 adminRouter.post("/login", ValidatorCollaboratorInner.loginValidation, login);
 adminRouter.post("/registro", ValidatorCollaboratorInner.createAdm, create());
 adminRouter.use(handleError);
+//# sourceMappingURL=admin.js.map

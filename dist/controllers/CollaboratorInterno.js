@@ -45,6 +45,13 @@ export class ControllerCollaboratorInner {
             next(error);
         }
     }
-    static LoginAdmCollaborator() { }
+    static LoginAdmCollaborator(request, response, next) {
+        try {
+            const token = ServiceCollaborator.CreateToken(request.body);
+        }
+        catch (error) {
+            next(error);
+        }
+    }
 }
 //# sourceMappingURL=CollaboratorInterno.js.map

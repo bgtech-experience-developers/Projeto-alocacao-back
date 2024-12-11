@@ -53,5 +53,22 @@ export class TypeGuardCollaboratorInner {
         });
         return CollaboratorInnerSchema;
     }
+    typeguardLogin() {
+        const loginSchema = Joi.object({
+            email: Joi.string().email().required(),
+            password: Joi.string().required(),
+        });
+        return loginSchema;
+    }
+    typeguardCreateAdm() {
+        const createAdm = Joi.object({
+            email: Joi.string().email().required().messages({
+                "string.email": "email está numa formatação incorreta",
+            }),
+            name: Joi.string(),
+            password: Joi.string().pattern(new RegExp("^[a-zA-Z0-9]{3,30}$")),
+        });
+        return createAdm;
+    }
 }
 //# sourceMappingURL=CollaboratorGuard.js.map

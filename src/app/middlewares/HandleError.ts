@@ -11,5 +11,6 @@ export const handleError = (
     return;
   }
 
+  console.log(error);
   response.status(500).json("erro interno de servidor");
 };
