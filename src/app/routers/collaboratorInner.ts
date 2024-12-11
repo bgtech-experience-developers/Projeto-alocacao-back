@@ -22,7 +22,7 @@ route.get(
   ValidatorCollaboratorInner.CollaboratorInnerDeleteAndGetUnique,
   ControllerCollaboratorInner.GetUniqueCollaborator
 );
-route.put("/atualizar", () => {
+route.patch("/atualizar", () => {
   "futuramente vc me aguarda";
 });
 route.use(handleError);

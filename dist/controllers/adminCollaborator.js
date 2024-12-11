@@ -17,6 +17,7 @@ export class AdminController {
                 console.log("essas são ar permissions em formato de numero ", allpermission);
                 const bodyAdmin = request.body;
                 const mensagem = await this.ServiceAdmin.create(bodyAdmin, allpermission);
+                response.status(201).json(mensagem);
             }
             catch (error) {
                 next(error);

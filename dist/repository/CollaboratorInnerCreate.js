@@ -8,7 +8,6 @@ export class CollaboratorInnerRepository {
             const collaborator = await connectionExist.collaborator_Inner.create({
                 data: { ...body, password: passwordHash },
             });
-            console.log(collaborator.password);
             return collaborator;
         }
         catch (error) {

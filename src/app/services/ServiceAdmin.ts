@@ -1,4 +1,4 @@
-import { admin } from "@prisma/client";
+
 import { CollaboratorError } from "../error/CollaboratorError.js";
 import { Admin, AdminRepository } from "../repository/AdminRepository.js";
 import { HashSenha } from "../utils/Bycrpt.js";

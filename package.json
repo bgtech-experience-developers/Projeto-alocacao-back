@@ -8,7 +8,7 @@
     "start": "nodemon ./dist/server.js",
     "build": "rimraf ./dist && tsc",
     "preServer": "npm run build && npm run server",
-    "server": " concurrently \"nodemon ./dist/server.js\"   \"tsc -w\" "
+    "server": " concurrently \"nodemon ./dist/server.js\"   \"npx tsc -w\" "
   },
   "author": "",
   "license": "ISC",

@@ -2,7 +2,6 @@ import { NextFunction, Request, Response } from "express";
 import { ServiceAdmin } from "../services/ServiceAdmin.js";
 import { Collaborator } from "../middlewares/CollaboratorValidator.js";
 import { CollaboratorError } from "../error/CollaboratorError.js";
-import { admin } from "@prisma/client";
 import { Admin } from "../repository/AdminRepository.js";
 interface Permissions {
   criar: string;
@@ -35,6 +34,7 @@ export class AdminController {
           bodyAdmin,
           allpermission
         );
+        response.status(201).json(mensagem)
       } catch (error) {
         next(error);
       }

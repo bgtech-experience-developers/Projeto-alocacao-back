@@ -8,7 +8,7 @@ route.get("/buscarTodos", ControllerCollaboratorInner.getAllCollaborators);
 route.post("/criar", ValidatorCollaboratorInner.CollaboratorInnerCreate, ControllerCollaboratorInner.createCollaboratorInner);
 route.delete("/deletar/:id", ValidatorCollaboratorInner.CollaboratorInnerDeleteAndGetUnique, ControllerCollaboratorInner.DeleteUniqueCollaborator);
 route.get("/unico/:id", ValidatorCollaboratorInner.CollaboratorInnerDeleteAndGetUnique, ControllerCollaboratorInner.GetUniqueCollaborator);
-route.put("/atualizar", () => {
+route.patch("/atualizar", () => {
     "futuramente vc me aguarda";
 });
 route.use(handleError);
