@@ -5,7 +5,6 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  
   provider = "prisma-client-js"
 }
 
@@ -13,104 +12,108 @@ datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
-model admin{
-  id Int @id @default(autoincrement())
-  name String @db.VarChar(40)
-  password String
-  email String @unique
+
+model admin {
+  id          Int           @id @default(autoincrement())
+  name        String        @db.VarChar(40)
+  password    String
+  email       String        @unique
   admin_roles Admin_roles[]
-  created_at DateTime @default(now())
-   uptade_at DateTime @default(now())
-}
-model Admin_roles{
-  adminID Int
-  rolesID Int
-  adminEntity admin @relation(fields: [adminID],references: [id])
-  rolesEntity roles @relation(fields: [rolesID],references: [id])
-@@id([adminID,rolesID])
+  created_at  DateTime      @default(now())
+  uptade_at   DateTime      @default(now())
 }
 
-model roles{
- id Int @id @default(autoincrement())
- name String
- permisson String
- admin_roles Admin_roles[]
-created_at DateTime @default(now())
-uptade_at DateTime @default(now())
+model Admin_roles {
+  adminID     Int
+  rolesID     Int
+  adminEntity admin @relation(fields: [adminID], references: [id])
+  rolesEntity roles @relation(fields: [rolesID], references: [id])
+
+  @@id([adminID, rolesID])
 }
-model Collaborator_Inner{
-  id Int @id @default(autoincrement())
-  cpf String @db.VarChar(11) @unique
-  pis String @db.VarChar(11)
-  rg  String @db.VarChar(35)
-  renova Int
-  name String @db.VarChar(75)
-  address String @db.VarChar(75)
-  neighborhood String @db.VarChar(40)
-  complement String ? @db.VarChar(40)
-  cep String @db.VarChar(8)
-  sex Int 
-  education Int
-  phone1 String @db.VarChar(20)
-  cell_phone1 String @db.VarChar(20)
-  phone2  String @db.VarChar(15)
-  cell_phone2 String @db.VarChar(15) 
-  cod_bank Int 
-  password String
-  agency String @db.VarChar(20) 
-  account String @db.VarChar(20) 
-  type_account Int?
-  variation Int?
-  email String @db.VarChar(50) 
-  work String @db.VarChar(3) 
-  type String @db.VarChar(20) 
-  organ Int
-  position String @db.VarChar(60) 
-  registration String @db.VarChar(20) 
-  sector String @db.VarChar(60) 
-  experience1 String? @db.VarChar(150) 
-  experience2  String @db.VarChar(150) 
-  experience3  String @db.VarChar(150) 
-  location_proof String @db.VarChar(90) 
-  created_at DateTime @default(now())
 
-
-
-
- 
-
+model roles {
+  id          Int           @id @default(autoincrement())
+  name        String
+  permisson   String
+  admin_roles Admin_roles[]
+  created_at  DateTime      @default(now())
+  uptade_at   DateTime      @default(now())
 }
-model colaborator{
-  id Int @id @default(autoincrement())
-  cpf String @db.VarChar(11) @unique
-  pis String @db.VarChar(11)
-  rg  String @db.VarChar(35)
-  name String @db.VarChar(75)
-  phone1 String @db.VarChar(20)
-  cell_phone1 String @db.VarChar(20)
-  phone2  String @db.VarChar(15)
-  cell_phone2 String @db.VarChar(15) 
-  cod_bank Int 
-  sex Int
-  education Int
-  agency String @db.VarChar(20) 
-  account String @db.VarChar(20) 
-  type_account Int?
-  variation Int?
-   experience1 String? @db.VarChar(150) 
-  experience2  String @db.VarChar(150) 
-  experience3  String @db.VarChar(150) 
-  location_proof String @db.VarChar(90) 
-   created_at DateTime @default(now())
-  update_at DateTime @default(now())
 
+model colaborator_inner {
+  id                        Int                         @id @default(autoincrement())
+  work                      String                      @db.VarChar(3)
+  type                      String                      @db.VarChar(20)
+  renova                    Int
+  organ                     Int
+  colaboratorId             Int
+  position                  String                      @db.VarChar(60)
+  registration              String                      @db.VarChar(20)
+  sector                    String                      @db.VarChar(60)
+  colaborator               colaborator                 @relation(fields: [colaboratorId], references: [id])
+  colaborator_inner_address colaborator_inner_address[]
 
+  @@map("colaborador_interno")
 }
+
+model colaborator_inner_address {
+  colaborator_innerId Int
+  addressId           Int
+  colaborator_inner   colaborator_inner @relation(fields: [colaborator_innerId], references: [id])
+  address             address           @relation(fields: [addressId], references: [id])
+  created_at          DateTime          @default(now())
+  uptade_at           DateTime          @default(now())
+
+  @@id([colaborator_innerId, addressId])
+}
+
+model colaborator {
+  id                   Int                    @id @default(autoincrement())
+  cpf                  String                 @unique @db.VarChar(11)
+  pis                  String                 @db.VarChar(11)
+  rg                   String                 @db.VarChar(35)
+  name                 String                 @db.VarChar(75)
+  phone1               String                 @db.VarChar(20)
+  cell_phone1          String                 @db.VarChar(20)
+  phone2               String                 @db.VarChar(15)
+  cell_phone2          String                 @db.VarChar(15)
+  cod_bank             Int
+  sex                  Int
+  education            Int
+  agency               String                 @db.VarChar(20)
+  account              String                 @db.VarChar(20)
+  type_account         Int?
+  variation            Int?
+  experience1          String?                @db.VarChar(150)
+  experience2          String                 @db.VarChar(150)
+  experience3          String                 @db.VarChar(150)
+  location_proof       String                 @db.VarChar(90)
+  created_at           DateTime               @default(now())
+  update_at            DateTime               @default(now())
+  colaborator_inner    colaborator_inner[]
+  colaborator_external colaborator_external[]
+}
+
+model colaborator_external {
+  colaborator_externalId Int
+  addressId              Int
+  colaborator            colaborator @relation(fields: [colaborator_externalId], references: [id])
+  address                address     @relation(fields: [addressId], references: [id])
+  created_at             DateTime    @default(now())
+  uptade_at              DateTime    @default(now())
+
+  @@id([colaborator_externalId, addressId])
+}
+
 model address {
-  id Int @id @default(autoincrement())
-  complement String
-  street String
-  cep String
-  neighborhood String
+  id                        Int                         @id @default(autoincrement())
+  complement                String
+  street                    String
+  cep                       String
+  neighborhood              String
+  created_at                DateTime                    @default(now())
+  uptade_at                 DateTime                    @default(now())
+  colaborator_inner_address colaborator_inner_address[]
+  colaborator_external      colaborator_external[]
 }
-
