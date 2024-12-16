@@ -99,15 +99,32 @@ model colaborator {
 }
 
 model colaborator_external {
-  colaborator_externalId Int
-  addressId              Int
-  colaborator            colaborator @relation(fields: [colaborator_externalId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  address                address     @relation(fields: [addressId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  created_at             DateTime    @default(now())
-  uptade_at              DateTime    @default(now())
-
-  @@id([colaborator_externalId, addressId])
+  id                     Int @id @default(autoincrement())
+  colaboratorId          Int
+  work                   String? @db.VarChar(3)
+  type                   String? @db.VarChar(20)
+  organ                  Int?
+  renova                 Int?
+  registration           String? @db.VarChar(20)
+  sector                 String? @db.VarChar(60)
+  position               String? @db.VarChar(60)
+  colaborator            colaborator @relation(fields: [colaboratorId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  colaborator_external_address colaborador_external_adress[]
+  
+  @@map("colaborador_external")
 }
+
+model colaborador_external_adress {
+  colaborator_externalId Int
+  adressId Int
+  colaborator_external colaborator_external @relation(fields: [colaborator_externalId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  adress address @relation(fields: [adressId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+
+  @@id([colaborator_externalId, adressId])
+}
+
 
 model address {
   id                        Int                         @id @default(autoincrement())
@@ -118,5 +135,5 @@ model address {
   created_at                DateTime                    @default(now())
   uptade_at                 DateTime                    @default(now())
   colaborator_inner_address colaborator_inner_address[]
-  colaborator_external      colaborator_external[]
+  colaborator_external      colaborador_external_adress[]
 }
