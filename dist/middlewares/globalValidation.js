@@ -2,13 +2,16 @@ import { CollaboratorError } from "../error/CollaboratorError.js";
 import { TypeGuardCollaboratorInner } from "../guards/CollaboratorGuard.js";
 const { typeGuardCollaboratorInnerCreate, typeGuardCollaboratorInnerDeleteAndGetUnique, typeguardLogin, typeguardCreateAdm, } = new TypeGuardCollaboratorInner();
 export class ValidatorCollaboratorInner {
-    static CollaboratorInnerCreate(req, response, next) {
+    static async CollaboratorInnerCreate(req, response, next) {
         try {
-            const { error, value } = typeGuardCollaboratorInnerCreate().validate(req.body);
-            if (error) {
+            const all = await typeGuardCollaboratorInnerCreate(req.body);
+            const error = all.filter(({ error, warning }) => {
+                return error ? error.message : null;
+            });
+            console.log(error);
+            if (error.length != 0) {
                 throw new CollaboratorError("campos invalidos", 400);
             }
-            req.body = value;
             next();
         }
         catch (error) {

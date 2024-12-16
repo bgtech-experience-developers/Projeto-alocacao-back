@@ -26,9 +26,11 @@ export class AdminRepository {
     }
   }
   async getUnique(id: undefined, email: string): Promise<admin>;
-  async getUnique(id?: number, email?: string): Promise<Admin | null> {
+  async getUnique(id?: number, email?: string): Promise<Admin[] | Admin | null> {
     if (id) {
-      return this.connectionDb.admin.findUnique({ where: { id } });
+      return this.connectionDb.admin.findMany({
+        where: {id},
+      });
     } else {
       return this.connectionDb.admin.findUnique({ where: { email } });
     }

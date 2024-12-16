@@ -5,22 +5,22 @@ import { handleError } from "../middlewares/HandleError.js";
 import { ControllerCollaboratorInner } from "../controllers/CollaboratorInterno.js";
 
 export const route = express.Router();
-route.get("/buscarTodos", ControllerCollaboratorInner.getAllCollaborators);
+route.get("/", ControllerCollaboratorInner.getAllCollaboratorsInner);
 route.post(
-  "/criar",
+  "/registro",
   ValidatorCollaboratorInner.CollaboratorInnerCreate,
   ControllerCollaboratorInner.createCollaboratorInner
 );
 route.delete(
   "/deletar/:id",
   ValidatorCollaboratorInner.CollaboratorInnerDeleteAndGetUnique,
-  ControllerCollaboratorInner.DeleteUniqueCollaborator
+  ControllerCollaboratorInner.deleteCollaboratorInner
 );
 
 route.get(
-  "/unico/:id",
+  "/:id",
   ValidatorCollaboratorInner.CollaboratorInnerDeleteAndGetUnique,
-  ControllerCollaboratorInner.GetUniqueCollaborator
+  ControllerCollaboratorInner.getUniqueCollaboratorInner
 );
 route.patch("/atualizar", () => {
   "futuramente vc me aguarda";
