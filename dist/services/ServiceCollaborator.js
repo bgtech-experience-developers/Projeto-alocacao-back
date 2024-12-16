@@ -71,7 +71,19 @@ export class ServiceCollaboratorExternal {
             throw error;
         }
     }
-    async getAll(status, page, limit, queryStatus = 1) {
+    static async getAllExternal(status, page, limit, queryStatus = 1) {
+        try {
+            if (status) {
+                queryStatus = status === "true" ? 1 : 0;
+            }
+            else {
+                queryStatus = null;
+            }
+            return await instanceColaboratorExtRepository.getAllExt(queryStatus, page, limit);
+        }
+        catch (error) {
+            throw error;
+        }
     }
     static async getUnique(id) {
         try {
@@ -80,6 +92,19 @@ export class ServiceCollaboratorExternal {
                 throw new CollaboratorError("Colaborador não encontrado", 400);
             }
             return collaborator;
+        }
+        catch (error) {
+            throw error;
+        }
+    }
+    static async deleteColl(id) {
+        try {
+            const collaborator = await instanceColaboratorExtRepository.getUniqueExt(id);
+            if (collaborator) {
+                const result = await instanceColaboratorExtRepository.deleteCollaboratorExt(id);
+                return result;
+            }
+            throw new CollaboratorError("Colaborador não cadastrado no sistema!");
         }
         catch (error) {
             throw error;

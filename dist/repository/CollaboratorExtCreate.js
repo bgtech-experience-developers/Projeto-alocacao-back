@@ -25,7 +25,7 @@ export default class CollaboratorExtCreate {
         }
     }
     ;
-    async getAll(status, page, limit) {
+    async getAllExt(status, page, limit) {
         try {
             console.log(page);
             console.log(limit);
@@ -90,5 +90,6 @@ export default class CollaboratorExtCreate {
             throw error;
         }
     }
+    ;
 }
 //# sourceMappingURL=CollaboratorExtCreate.js.map

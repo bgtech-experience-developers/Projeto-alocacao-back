@@ -15,9 +15,13 @@ export class ControllerCollaboratorExterno {
         try {
             const query = request.query;
             const status = query.status ? query.status : null;
-            const page = Number(query);
+            const page = Number(query.page) ? Number(query.page) * 10 : 10;
+            const limit = Number(query.limit) ? Number(query.limit) : 5;
+            const allCollaborators = await ServiceCollaboratorExternal.getAllExternal(status, page, limit);
+            response.status(200).json(allCollaborators);
         }
         catch (error) {
+            next(error);
         }
     }
     ;
@@ -32,5 +36,15 @@ export class ControllerCollaboratorExterno {
         }
     }
     ;
+    static async deleteColaborator(request, response, next) {
+        try {
+            const id = Number(request.params.id);
+            const result = await ServiceCollaboratorExternal.deleteColl(id);
+            response.status(201).json(result);
+        }
+        catch (error) {
+            next(error);
+        }
+    }
 }
 //# sourceMappingURL=CollaboratorExterno.js.map
