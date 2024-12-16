@@ -1,7 +1,10 @@
 import { exist } from "joi";
 import { CollaboratorInnerRepository } from "../repository/CollaboratorInnerCreate.js";
+import CollaboratorExtCreate from "../repository/CollaboratorExtCreate.js";
 import { CollaboratorError } from "../error/CollaboratorError.js";
 const instanceColaboratorRepository = new CollaboratorInnerRepository();
+const instanceColaboratorExtRepository = new CollaboratorExtCreate();
+
 export class ServiceCollaborator {
   static async create(body: createColaborator) {
     try {
@@ -64,6 +67,41 @@ export class ServiceCollaborator {
         return result;
       }
       throw new CollaboratorError("colaborador não encontrado no sistema");
+    } catch (error) {
+      throw error;
+    }
+  }
+}
+
+export class ServiceCollaboratorExternal {
+  static async createColl(body: createColaborator) {
+    try {
+      const colaboratorRegister = await instanceColaboratorExtRepository.getUniqueExt(
+        undefined,
+        body.colaborador.cpf
+      );
+      
+      if (colaboratorRegister === null) {
+        return await instanceColaboratorExtRepository.createCollExt(body);
+      }
+      throw new CollaboratorError("Colaborador já existe!")
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async getAll(status: string | null, page: number, limit: number, queryStatus: number | null = 1) {
+
+  }
+
+  static async getUnique(id: number) {
+    try {
+      const collaborator = await instanceColaboratorExtRepository.getUniqueExt(id);
+      if (collaborator === null) {
+        throw new CollaboratorError("Colaborador não encontrado", 400)
+      }
+      return collaborator;
+
     } catch (error) {
       throw error;
     }

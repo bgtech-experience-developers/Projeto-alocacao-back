@@ -1,5 +1,6 @@
 type optinalValueCreate = string | null;
 type optinalValueNumber = number | null;
+
 interface colaborator {
   id: number;
   cpf: string;
@@ -35,9 +36,19 @@ interface ColaboratorInner {
   registration: optinalValueCreate;
   sector: optinalValueCreate;
 }
+interface ColaboratorExt{
+  renova: optinalValueNumber;
+  work: optinalValueCreate;
+  type: optinalValueCreate;
+  organ: optinalValueNumber;
+  position: optinalValueCreate;
+  registration: optinalValueCreate;
+  sector: optinalValueCreate;
+}
 interface createColaborator {
   colaborador: colaborator;
   colaboradorInterno: ColaboratorInner;
+  colaboradorExterno: ColaboratorExt;
   endereco: address;
 }
 interface address {
