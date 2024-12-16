@@ -11,6 +11,6 @@ app.use(express.json());
 app.use("/colaborador", route);
 app.use("/adms", adminRouter);
 
-app.listen(3500, () => {
+app.listen(8000, () => {
   console.log("servidor está rodando na porta +", port);
 });

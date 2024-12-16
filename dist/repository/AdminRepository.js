@@ -22,7 +22,9 @@ export class AdminRepository {
     }
     async getUnique(id, email) {
         if (id) {
-            return this.connectionDb.admin.findUnique({ where: { id } });
+            return this.connectionDb.admin.findMany({
+                where: { id },
+            });
         }
         else {
             return this.connectionDb.admin.findUnique({ where: { email } });

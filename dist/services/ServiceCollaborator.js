@@ -1,34 +1,30 @@
 import { CollaboratorInnerRepository } from "../repository/CollaboratorInnerCreate.js";
 import { CollaboratorError } from "../error/CollaboratorError.js";
-const { del, getAll, create, GetUnique } = new CollaboratorInnerRepository();
+const instanceColaboratorRepository = new CollaboratorInnerRepository();
 export class ServiceCollaborator {
     static async create(body) {
         try {
-            if (await getAll(body.cpf)) {
-                throw new CollaboratorError("colaborador ja registrado no sistema", 403);
+            const colaboratorRegister = await instanceColaboratorRepository.getUnique(undefined, body.colaborador.cpf);
+            if (!colaboratorRegister) {
+                return await instanceColaboratorRepository.createCollaborator(body);
             }
-            return await create(body);
+            throw new CollaboratorError("colaborador ja cadastrado no sistema");
         }
         catch (error) {
             throw error;
         }
     }
-    static async getAll() {
+    static async getAll(status, page, limit, queryStatus = 1) {
         try {
-            return await getAll();
-        }
-        catch (error) {
-            throw error;
-        }
-    }
-    static async del(id) {
-        try {
-            const CollboratorDel = await GetUnique(id);
-            console.log(CollboratorDel);
-            if (!CollboratorDel) {
-                throw new CollaboratorError("colaborador não existe", 400);
+            console.log(status);
+            if (status) {
+                queryStatus = status === "true" ? 1 : 0;
             }
-            return await del(id);
+            else {
+                queryStatus = null;
+            }
+            console.log(queryStatus);
+            return await instanceColaboratorRepository.getAll(queryStatus, page, limit);
         }
         catch (error) {
             throw error;
@@ -36,9 +32,9 @@ export class ServiceCollaborator {
     }
     static async getUnique(id) {
         try {
-            const collaborator = await GetUnique(id);
+            const collaborator = await instanceColaboratorRepository.getUnique(id);
             if (!collaborator) {
-                throw new CollaboratorError("colaborador não existente", 400);
+                throw new CollaboratorError("colaborador não encontrado", 400);
             }
             return collaborator;
         }
@@ -46,10 +42,18 @@ export class ServiceCollaborator {
             throw error;
         }
     }
-    static async CreateToken(body) {
+    static async delete(id) {
         try {
+            const collaborator = await instanceColaboratorRepository.getUnique(id);
+            if (collaborator) {
+                const result = await instanceColaboratorRepository.deleteCollaborator(id);
+                return result;
+            }
+            throw new CollaboratorError("colaborador não encontrado no sistema");
         }
-        catch (error) { }
+        catch (error) {
+            throw error;
+        }
     }
 }
 //# sourceMappingURL=ServiceCollaborator.js.map

@@ -43,15 +43,15 @@ model roles {
 
 model colaborator_inner {
   id                        Int                         @id @default(autoincrement())
-  work                      String                      @db.VarChar(3)
-  type                      String                      @db.VarChar(20)
-  renova                    Int
-  organ                     Int
+  work                      String?                     @db.VarChar(3)
+  type                      String?                     @db.VarChar(20)
+  renova                    Int?
+  organ                     Int?
   colaboratorId             Int
-  position                  String                      @db.VarChar(60)
-  registration              String                      @db.VarChar(20)
-  sector                    String                      @db.VarChar(60)
-  colaborator               colaborator                 @relation(fields: [colaboratorId], references: [id])
+  position                  String?                     @db.VarChar(60)
+  registration              String?                     @db.VarChar(20)
+  sector                    String?                     @db.VarChar(60)
+  colaborator               colaborator                 @relation(fields: [colaboratorId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   colaborator_inner_address colaborator_inner_address[]
 
   @@map("colaborador_interno")
@@ -60,8 +60,8 @@ model colaborator_inner {
 model colaborator_inner_address {
   colaborator_innerId Int
   addressId           Int
-  colaborator_inner   colaborator_inner @relation(fields: [colaborator_innerId], references: [id])
-  address             address           @relation(fields: [addressId], references: [id])
+  colaborator_inner   colaborator_inner @relation(fields: [colaborator_innerId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  address             address           @relation(fields: [addressId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   created_at          DateTime          @default(now())
   uptade_at           DateTime          @default(now())
 
@@ -71,24 +71,27 @@ model colaborator_inner_address {
 model colaborator {
   id                   Int                    @id @default(autoincrement())
   cpf                  String                 @unique @db.VarChar(11)
-  pis                  String                 @db.VarChar(11)
-  rg                   String                 @db.VarChar(35)
-  name                 String                 @db.VarChar(75)
-  phone1               String                 @db.VarChar(20)
-  cell_phone1          String                 @db.VarChar(20)
-  phone2               String                 @db.VarChar(15)
-  cell_phone2          String                 @db.VarChar(15)
-  cod_bank             Int
-  sex                  Int
-  education            Int
-  agency               String                 @db.VarChar(20)
-  account              String                 @db.VarChar(20)
+  pis                  String?                @db.VarChar(11)
+  rg                   String?                @db.VarChar(35)
+  name                 String?                @db.VarChar(75)
+  phone1               String?                @db.VarChar(20)
+  cell_phone1          String?                @db.VarChar(20)
+  phone2               String?                @db.VarChar(15)
+  cell_phone2          String?                @db.VarChar(15)
+  cod_bank             String?
+  type                 String?
+  sex                  Int?
+  education            Int?
+  agency               String?                @db.VarChar(20)
+  account              String?                @db.VarChar(20)
   type_account         Int?
+  email                String?
   variation            Int?
+  status               Boolean                @default(false)
   experience1          String?                @db.VarChar(150)
-  experience2          String                 @db.VarChar(150)
-  experience3          String                 @db.VarChar(150)
-  location_proof       String                 @db.VarChar(90)
+  experience2          String?                @db.VarChar(150)
+  experience3          String?                @db.VarChar(150)
+  location_proof       String?                @db.VarChar(90)
   created_at           DateTime               @default(now())
   update_at            DateTime               @default(now())
   colaborator_inner    colaborator_inner[]
@@ -98,8 +101,8 @@ model colaborator {
 model colaborator_external {
   colaborator_externalId Int
   addressId              Int
-  colaborator            colaborator @relation(fields: [colaborator_externalId], references: [id])
-  address                address     @relation(fields: [addressId], references: [id])
+  colaborator            colaborator @relation(fields: [colaborator_externalId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  address                address     @relation(fields: [addressId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   created_at             DateTime    @default(now())
   uptade_at              DateTime    @default(now())
 
@@ -108,10 +111,10 @@ model colaborator_external {
 
 model address {
   id                        Int                         @id @default(autoincrement())
-  complement                String
-  street                    String
-  cep                       String
-  neighborhood              String
+  complement                String?
+  street                    String?
+  cep                       String?
+  neighborhood              String?
   created_at                DateTime                    @default(now())
   uptade_at                 DateTime                    @default(now())
   colaborator_inner_address colaborator_inner_address[]

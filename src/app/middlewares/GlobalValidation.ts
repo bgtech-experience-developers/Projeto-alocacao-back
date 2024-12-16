@@ -9,20 +9,20 @@ const {
   typeguardCreateAdm,
 } = new TypeGuardCollaboratorInner();
 export class ValidatorCollaboratorInner {
-  static CollaboratorInnerCreate(
+  static async CollaboratorInnerCreate(
     req: Request,
     response: Response,
     next: NextFunction
   ) {
     try {
-      const { error, value } = typeGuardCollaboratorInnerCreate().validate(
-        req.body
-      );
-      if (error) {
+      const all = await typeGuardCollaboratorInnerCreate(req.body);
+      const error = all.filter(({ error, warning }) => {
+        return error ? error.message : null;
+      });
+      console.log(error);
+      if (error.length != 0) {
         throw new CollaboratorError("campos invalidos", 400);
       }
-
-      req.body = value;
       next();
     } catch (error) {
       next(error);
