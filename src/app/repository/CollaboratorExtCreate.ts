@@ -30,7 +30,7 @@ export default class CollaboratorExtCreate {
         }
     };
 
-    async getAll(status: number | null, page: number, limit: number) {
+    async getAllExt(status: number | null, page: number, limit: number) {
         try {
             console.log(page);
             console.log(limit);
@@ -104,6 +104,6 @@ export default class CollaboratorExtCreate {
         } catch (error) {
             throw error;
         }
-    }
+    };
 
 }

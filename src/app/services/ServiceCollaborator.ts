@@ -1,4 +1,4 @@
-import { exist } from "joi";
+import { exist, when } from "joi";
 import { CollaboratorInnerRepository } from "../repository/CollaboratorInnerCreate.js";
 import CollaboratorExtCreate from "../repository/CollaboratorExtCreate.js";
 import { CollaboratorError } from "../error/CollaboratorError.js";
@@ -90,8 +90,18 @@ export class ServiceCollaboratorExternal {
     }
   }
 
-  async getAll(status: string | null, page: number, limit: number, queryStatus: number | null = 1) {
+  static async getAllExternal(status: string | null, page: number, limit: number, queryStatus: number | null = 1) {
+    try {
+      if (status) {
+        queryStatus = status === "true" ? 1 : 0
+      } else {
+        queryStatus = null
+      }
+      return await instanceColaboratorExtRepository.getAllExt(queryStatus, page, limit);
 
+    } catch (error) {
+      throw error;
+    }
   }
 
   static async getUnique(id: number) {
@@ -101,6 +111,20 @@ export class ServiceCollaboratorExternal {
         throw new CollaboratorError("Colaborador não encontrado", 400)
       }
       return collaborator;
+
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static async deleteColl(id: number) {
+    try {
+      const collaborator = await instanceColaboratorExtRepository.getUniqueExt(id);
+      if (collaborator) {
+        const result = await instanceColaboratorExtRepository.deleteCollaboratorExt(id)
+        return result;
+      }
+      throw new CollaboratorError("Colaborador não cadastrado no sistema!")
 
     } catch (error) {
       throw error;
