@@ -31,10 +31,17 @@ export class CollaboratorInnerRepository {
       throw error;
     }
   }
-  async getAll(status: boolean | null, page: number, limit: number) {
+  async getAll(status: number | null, page: number, limit: number) {
     try {
+      console.log(page);
+      console.log(limit);
       const registerColaboraters = await this.connection
-        .$queryRaw`SELECT c.cell_phone1,c.cell_phone2,c.phone2,c.phone1,c1.type,c.name,c.email FROM colaborator c LEFT JOIN colaborar.colaborador_interno AS c1 ON c.id = c1.colaboratorId `;
+        .$queryRaw`SELECT c.cell_phone1,c.cell_phone2,c.phone2,c.phone1,c1.type,c.name,c.email FROM colaborator c LEFT JOIN colaborar.colaborador_interno AS c1 ON c.id = c1.colaboratorId WHERE c.status = ${
+        typeof status === "number" ? status : 1
+      }
+       OR c.status =${
+         typeof status === "number" ? status : 0
+       }  LIMIT ${limit} OFFSET ${page}`;
 
       // const registerColaboraters = await this.connection.colaborator.findMany({
       //   include: { colaborator_inner: { select: { type: true } } },
@@ -75,8 +82,6 @@ export class CollaboratorInnerRepository {
           where: { colaboratorId: id },
           select: { id: true },
         });
-        console.log(idInner);
-
         const IdsAddress = await Promise.all(
           idInner.map(async ({ id }) => {
             return await tsx.colaborator_inner_address.findFirst({

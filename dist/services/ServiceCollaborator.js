@@ -14,9 +14,17 @@ export class ServiceCollaborator {
             throw error;
         }
     }
-    static async getAll(status, page, limit) {
+    static async getAll(status, page, limit, queryStatus = 1) {
         try {
-            return await instanceColaboratorRepository.getAll(status, page, limit);
+            console.log(status);
+            if (status) {
+                queryStatus = status === "true" ? 1 : 0;
+            }
+            else {
+                queryStatus = null;
+            }
+            console.log(queryStatus);
+            return await instanceColaboratorRepository.getAll(queryStatus, page, limit);
         }
         catch (error) {
             throw error;

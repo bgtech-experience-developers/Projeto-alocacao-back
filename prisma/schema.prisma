@@ -87,6 +87,7 @@ model colaborator {
   type_account         Int?
   email                String?
   variation            Int?
+  status               Boolean                @default(false)
   experience1          String?                @db.VarChar(150)
   experience2          String?                @db.VarChar(150)
   experience3          String?                @db.VarChar(150)
