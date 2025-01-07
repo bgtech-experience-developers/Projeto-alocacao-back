@@ -120,3 +120,38 @@ model address {
   colaborator_inner_address colaborator_inner_address[]
   colaborator_external      colaborator_external[]
 }
+
+model school {
+  id            Int    @id @default(autoincrement())
+  name_school   String
+  cnpj          String
+  manager       String
+  manager_email String
+  phone         String
+
+  rooms   room[]
+  address schoolAddress?
+}
+
+model room {
+  id            Int    @id @default(autoincrement())
+  floor         String
+  identificator String
+  ceps          String
+  chair_qtd     Int
+  chair_type    String
+  school        school @relation(fields: [schoolId], references: [id])
+  schoolId      Int
+}
+
+model schoolAddress {
+  id           Int    @id @default(autoincrement())
+  cep          String
+  street       String
+  neighborhood String
+  state        String
+  city         String
+
+  school school @relation(fields: [userId], references: [id])
+  userId Int    @unique
+}
