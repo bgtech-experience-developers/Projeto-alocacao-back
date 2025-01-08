@@ -9,7 +9,7 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
+  provider = "postgres"
   url      = env("DATABASE_URL")
 }
 
@@ -20,7 +20,7 @@ model admin {
   email       String        @unique
   admin_roles Admin_roles[]
   created_at  DateTime      @default(now())
-  uptade_at   DateTime      @default(now())
+  updated_at   DateTime      @default(now())
 }
 
 model Admin_roles {
@@ -38,7 +38,7 @@ model roles {
   permisson   String
   admin_roles Admin_roles[]
   created_at  DateTime      @default(now())
-  uptade_at   DateTime      @default(now())
+  updated_at   DateTime      @default(now())
 }
 
 model colaborator_inner {
@@ -63,7 +63,7 @@ model colaborator_inner_address {
   colaborator_inner   colaborator_inner @relation(fields: [colaborator_innerId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   address             address           @relation(fields: [addressId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   created_at          DateTime          @default(now())
-  uptade_at           DateTime          @default(now())
+  updated_at           DateTime          @default(now())
 
   @@id([colaborator_innerId, addressId])
 }
@@ -93,14 +93,14 @@ model colaborator {
   experience3          String?                @db.VarChar(150)
   location_proof       String?                @db.VarChar(90)
   created_at           DateTime               @default(now())
-  update_at            DateTime               @default(now())
+  updated_at            DateTime               @default(now())
   colaborator_inner    colaborator_inner[]
   colaborator_external colaborator_external[]
 }
 
 model colaborator_external {
   id                     Int @id @default(autoincrement())
-  colaboratorId          Int
+  idColaborator          Int
   work                   String? @db.VarChar(3)
   type                   String? @db.VarChar(20)
   organ                  Int?
@@ -108,21 +108,20 @@ model colaborator_external {
   registration           String? @db.VarChar(20)
   sector                 String? @db.VarChar(60)
   position               String? @db.VarChar(60)
-  colaborator            colaborator @relation(fields: [colaboratorId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  colaborator_external_address colaborador_external_adress[]
-  
-  @@map("colaborador_external")
+  colaborator            colaborator @relation(fields: [idColaborator], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  colaborator_external_address colaborator_external_address[]
+
 }
 
-model colaborador_external_adress {
+model colaborator_external_address {
   colaborator_externalId Int
-  adressId Int
+  addressId Int
   colaborator_external colaborator_external @relation(fields: [colaborator_externalId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  adress address @relation(fields: [adressId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  address address @relation(fields: [addressId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
 
-  @@id([colaborator_externalId, adressId])
+  @@id([colaborator_externalId, addressId])
 }
 
 
@@ -133,7 +132,7 @@ model address {
   cep                       String?
   neighborhood              String?
   created_at                DateTime                    @default(now())
-  uptade_at                 DateTime                    @default(now())
+  updated_at                 DateTime                    @default(now())
   colaborator_inner_address colaborator_inner_address[]
-  colaborator_external      colaborador_external_adress[]
+  colaborator_external_address      colaborator_external_address[]
 }
