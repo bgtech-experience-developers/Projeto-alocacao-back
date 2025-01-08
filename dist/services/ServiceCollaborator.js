@@ -61,11 +61,17 @@ export class ServiceCollaborator {
 export class ServiceCollaboratorExternal {
     static async createColl(body) {
         try {
+            // if (!body.colaborador || !body.colaboradorExterno || !body.endereco) {
+            //   throw new Error('Dados invalidos no service!')
+            // }
+            console.log("body recebido:", body);
             const colaboratorRegister = await instanceColaboratorExtRepository.getUniqueExt(undefined, body.colaborador.cpf);
             if (colaboratorRegister === null) {
                 return await instanceColaboratorExtRepository.createCollExt(body);
             }
-            throw new CollaboratorError("Colaborador já existe!");
+            else {
+                throw new CollaboratorError("Colaborador já existe!");
+            }
         }
         catch (error) {
             throw error;
@@ -79,12 +85,25 @@ export class ServiceCollaboratorExternal {
             else {
                 queryStatus = null;
             }
-            return await instanceColaboratorExtRepository.getAllExt(queryStatus, page, limit);
+            return await instanceColaboratorExtRepository.getAllColl(queryStatus, page, limit);
         }
         catch (error) {
             throw error;
         }
     }
+    ;
+    static async findAllExternal(status, page, limit) {
+        try {
+            const queryStatus = typeof status === 'boolean' ? (status ? 1 : 0) : null;
+            const colaborator = await instanceColaboratorExtRepository.simpleGetAll(queryStatus, page, limit);
+            return colaborator;
+        }
+        catch (error) {
+            console.error("Erro em getAllSimple", error);
+            throw new Error("Colaboradores Externos não encontrados");
+        }
+    }
+    ;
     static async getUnique(id) {
         try {
             const collaborator = await instanceColaboratorExtRepository.getUniqueExt(id);

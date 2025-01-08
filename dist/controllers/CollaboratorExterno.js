@@ -3,8 +3,9 @@ export class ControllerCollaboratorExterno {
     static async createColExt(request, response, next) {
         try {
             const collaborator = await ServiceCollaboratorExternal.createColl(request.body);
-            console.log(request.body, "Corpo chega no controller");
+            console.log("Corpo chega no controller");
             response.status(201).json("Colaborador cadastrado com sucesso! ");
+            console.log(collaborator);
         }
         catch (error) {
             next(error);
@@ -19,6 +20,20 @@ export class ControllerCollaboratorExterno {
             const limit = Number(query.limit) ? Number(query.limit) : 5;
             const allCollaborators = await ServiceCollaboratorExternal.getAllExternal(status, page, limit);
             response.status(200).json(allCollaborators);
+        }
+        catch (error) {
+            next(error);
+        }
+    }
+    ;
+    static async getAll(request, response, next) {
+        try {
+            const { status } = request.body;
+            const query = request.query;
+            const page = query.page ? Number(query.page) : 1;
+            const limit = query.limit ? Number(query.limit) : 5;
+            const user = await ServiceCollaboratorExternal.findAllExternal(status, page, limit);
+            response.status(200).json(user);
         }
         catch (error) {
             next(error);
