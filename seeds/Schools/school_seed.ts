@@ -4,7 +4,7 @@ import { PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient()
 
 async function main() {
-  for(let i = 0; i <= 4; i++) {
+  for(let i = 0; i <= 5; i++) {
     await prisma.school.create({
       data: {
         name_school: faker.person.fullName(),
@@ -25,16 +25,16 @@ async function main() {
           create: [
             {
               floor: `${faker.number.int()} andar`,
-              identificator: `${faker.number.romanNumeral}`,
-              ceps: `${faker.number.int({min: 10, max: 10})}`,
-              chair_qtd: faker.number.int({min: 10, max: 100}),
+              identificator: `${faker.number.int()}`,
+              ceps: `${faker.number.int({min: 1, max: 2})}`,
+              chair_qtd: faker.number.int({min: 1, max: 2}),
               chair_type: faker.word.words(),
             },
             {
               floor: `${faker.number.int()} andar`,
-              identificator: `${faker.number.romanNumeral}`,
-              ceps: `${faker.number.int({min: 10, max: 10})}`,
-              chair_qtd: faker.number.int({min: 10, max: 100}),
+              identificator: `${faker.number.int()}`,
+              ceps: `${faker.number.int({min: 1, max: 2})}`,
+              chair_qtd: faker.number.int({min: 1, max: 1}),
               chair_type: faker.word.words(),
             },
           ],
@@ -57,14 +57,29 @@ async function getSchool() {
   console.log(JSON.stringify(school, null, 2));
 }
 
+async function deleteSchools() {
+  await prisma.$transaction([
+    prisma.room.deleteMany(),
+    prisma.address.deleteMany(),
+    prisma.school.deleteMany()
+  ])
+  console.log('deletados com sucesso');
+}
+
 // main()
 //   .catch((e) => {
 //     console.log(e);
 //     process.exit(1)
 //   })
   
-// getSchool()
-//   .catch(e => {
-//     console.log(e);
-//     process.exit(1)
-//   })
+getSchool()
+  .catch(e => {
+    console.log(e);
+    process.exit(1)
+  })
+
+// deleteSchools()
+// .catch(e => {
+//   console.log(e);
+//   process.exit(1)
+// })

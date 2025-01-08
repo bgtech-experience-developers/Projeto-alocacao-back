@@ -129,8 +129,9 @@ model school {
   manager_email String
   phone         String
 
-  rooms   room[]
-  address schoolAddress?
+  rooms           room[]
+  address         schoolAddress? @relation(fields: [schoolAddressId], references: [id])
+  schoolAddressId Int            @unique
 }
 
 model room {
@@ -152,6 +153,5 @@ model schoolAddress {
   state        String
   city         String
 
-  school school @relation(fields: [userId], references: [id])
-  userId Int    @unique
+  school school?
 }
