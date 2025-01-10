@@ -72,11 +72,11 @@ async function deleteSchools() {
 //     process.exit(1)
 //   })
   
-getSchool()
-  .catch(e => {
-    console.log(e);
-    process.exit(1)
-  })
+// getSchool()
+//   .catch(e => {
+//     console.log(e);
+//     process.exit(1)
+//   })
 
 // deleteSchools()
 // .catch(e => {

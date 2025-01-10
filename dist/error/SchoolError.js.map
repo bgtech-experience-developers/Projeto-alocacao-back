@@ -1,0 +1,1 @@
+{"version":3,"file":"SchoolError.js","sourceRoot":"","sources":["../../src/app/error/SchoolError.ts"],"names":[],"mappings":"AAAA,MAAM,OAAO,WAAY,SAAQ,KAAK;IAC3B,MAAM,CAAS;IACxB,YAAY,OAAe,EAAE,MAAM,GAAG,GAAG;QACvC,KAAK,CAAC,OAAO,CAAC,CAAC;QACf,IAAI,CAAC,MAAM,GAAG,MAAM,CAAC;IACvB,CAAC;CACF"}

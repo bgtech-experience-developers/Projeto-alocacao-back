@@ -1,4 +1,4 @@
-interface School {
+export interface School {
   name_school: string;
   cnpj: string;
   manager: string;
@@ -19,7 +19,7 @@ interface Room {
 
 interface Address {
   cep: string;
-  stret: string;
+  street: string;
   neighborhood: string;
   state: string;
   city: string
