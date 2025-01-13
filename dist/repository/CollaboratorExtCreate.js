@@ -119,5 +119,7 @@ export default class CollaboratorExtCreate {
         }
     }
     ;
+    static async updateCollaboratorExt() {
+    }
 }
 //# sourceMappingURL=CollaboratorExtCreate.js.map

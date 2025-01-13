@@ -2,6 +2,7 @@ import { exist, when } from "joi";
 import { CollaboratorInnerRepository } from "../repository/CollaboratorInnerCreate.js";
 import CollaboratorExtCreate from "../repository/CollaboratorExtCreate.js";
 import { CollaboratorError } from "../error/CollaboratorError.js";
+import { log } from "console";
 const instanceColaboratorRepository = new CollaboratorInnerRepository();
 const instanceColaboratorExtRepository = new CollaboratorExtCreate();
 
@@ -79,7 +80,8 @@ export class ServiceCollaboratorExternal {
       // if (!body.colaborador || !body.colaboradorExterno || !body.endereco) {
       //   throw new Error('Dados invalidos no service!')
       // }
-      console.log("body recebido:", body);
+      
+      console.log("body recebido:", body.colaborador);
       
       const colaboratorRegister = await instanceColaboratorExtRepository.getUniqueExt(
         undefined,
@@ -131,7 +133,6 @@ export class ServiceCollaboratorExternal {
     }
   };
   
-
   static async getUnique(id: number) {
     try {
       const collaborator = await instanceColaboratorExtRepository.getUniqueExt(id);

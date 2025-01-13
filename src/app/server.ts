@@ -11,8 +11,8 @@ const port = process.env.PORTA;
 app.use(express.json());
 app.use("/colaborador", route);
 app.use("/adms", adminRouter);
-app.use("/colaboratorExternal", routeExt)
+app.use("/colaboratorexterno", routeExt)
 
-app.listen(8000, () => {
+app.listen(port, () => {
   console.log("servidor está rodando na porta", port);
 }); 

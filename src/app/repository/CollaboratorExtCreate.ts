@@ -138,4 +138,9 @@ export default class CollaboratorExtCreate {
         }
     };
 
+    static async updateCollaboratorExt() {
+        
+    }
+
+
 }

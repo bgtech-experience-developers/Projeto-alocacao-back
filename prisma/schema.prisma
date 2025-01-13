@@ -9,7 +9,7 @@ generator client {
 }
 
 datasource db {
-  provider = "postgres"
+  provider = "mysql"
   url      = env("DATABASE_URL")
 }
 
@@ -131,7 +131,7 @@ model address {
   street                    String?
   cep                       String?
   neighborhood              String?
-  created_at                DateTime                    @default(now())
+  created_at                DateTime                    @default(now())   
   updated_at                 DateTime                    @default(now())
   colaborator_inner_address colaborator_inner_address[]
   colaborator_external_address      colaborator_external_address[]

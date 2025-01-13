@@ -1,10 +1,10 @@
 import { ServiceCollaboratorExternal } from "../services/ServiceCollaborator.js";
-import { Request, Response, NextFunction} from "express";
+import { Request, Response, NextFunction, response} from "express";
 
 export class ControllerCollaboratorExterno {
     static async createColExt(request: Request, response: Response, next: NextFunction) {
         try {
-
+            console.log(request.body.colaborador)
             const collaborator = await ServiceCollaboratorExternal.createColl(request.body);
             console.log("Corpo chega no controller");
             
@@ -37,6 +37,10 @@ export class ControllerCollaboratorExterno {
     static async getAll(request: Request, response: Response, next: NextFunction) {
         try {
             const {status} = request.body;
+            console.log(request.query);
+            console.log("oi");
+            
+            
             const query = request.query;
             const page = query.page ? Number(query.page) : 1;
             const limit = query.limit ? Number(query.limit) : 5;
@@ -74,6 +78,14 @@ export class ControllerCollaboratorExterno {
 
         } catch (error) {
             next(error);
+        }
+    }
+
+    static async updateColaborator(request: Request, response: Response,next: NextFunction) {
+        try {
+            response.status(201).json("Hello World")
+        } catch(error) {
+            next(error)
         }
     }
 }

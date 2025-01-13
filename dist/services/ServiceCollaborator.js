@@ -64,7 +64,7 @@ export class ServiceCollaboratorExternal {
             // if (!body.colaborador || !body.colaboradorExterno || !body.endereco) {
             //   throw new Error('Dados invalidos no service!')
             // }
-            console.log("body recebido:", body);
+            console.log("body recebido:", body.colaborador);
             const colaboratorRegister = await instanceColaboratorExtRepository.getUniqueExt(undefined, body.colaborador.cpf);
             if (colaboratorRegister === null) {
                 return await instanceColaboratorExtRepository.createCollExt(body);
