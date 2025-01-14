@@ -28,12 +28,22 @@ export class School {
 
   async getUniqueSchool(request: Request, response: Response, next: NextFunction): Promise<void> {
     const { id } = request.params
-    console.log(id);
     
     try {
       const school = await service.getUniqueSchoolService(Number(id))
 
       response.status(200).json(school)
+    } catch (error) {
+      next(error)
+    }
+  }
+
+  async deleteSchool(request: Request, response: Response, next: NextFunction): Promise<void> {
+    const {id} = request.params
+
+    try {
+      const deleted = await service.deleteSchoolService(Number(id))
+      response.status(200).json({message: 'Deletado com sucesso', schoolDeleted: deleted.name_school})
     } catch (error) {
       next(error)
     }

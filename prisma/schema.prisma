@@ -129,16 +129,15 @@ model school {
   manager_email String
   phone         String
 
-  rooms           room[]
-  address         schoolAddress? @relation(fields: [schoolAddressId], references: [id])
-  schoolAddressId Int            @unique
+  rooms   room[]
+  address schoolAddress?
 }
 
 model room {
   id            Int    @id @default(autoincrement())
   floor         String
   identificator String
-  ceps          String
+  cespe         String
   chair_qtd     Int
   chair_type    String
   school        school @relation(fields: [schoolId], references: [id])
@@ -146,12 +145,14 @@ model room {
 }
 
 model schoolAddress {
-  id           Int    @id @default(autoincrement())
+  id           Int     @id @default(autoincrement())
   cep          String
   street       String
   neighborhood String
   state        String
   city         String
+  complement   String?
 
-  school school?
+  school   school @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+  schoolId Int    @unique
 }

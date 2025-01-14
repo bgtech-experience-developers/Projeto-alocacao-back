@@ -37,4 +37,15 @@ export class ServiceSchool {
       throw error
     }
   }
+
+  async deleteSchoolService(id: number) {
+    const {deleteSchool} = new SchoolRepository()
+    try {
+      const deleted = await deleteSchool(id)
+      return deleted
+    } catch (error) {
+      console.log(error);
+      throw error
+    }
+  }
 }

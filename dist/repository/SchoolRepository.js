@@ -49,9 +49,9 @@ export class SchoolRepository {
                         create: body.rooms.map((room) => ({
                             floor: room.floor,
                             identificator: room.identificator,
-                            ceps: room.ceps,
+                            cespe: room.cespe,
                             chair_qtd: room.chair_qtd,
-                            chair_type: room.chair_type
+                            chair_type: room.chair_type,
                         }))
                     }
                 }
@@ -61,6 +61,26 @@ export class SchoolRepository {
             console.log(error);
             throw error;
         }
+    }
+    async deleteSchool(id) {
+        return await connection.$transaction(async (prisma) => {
+            await prisma.room.deleteMany({
+                where: {
+                    schoolId: id
+                }
+            });
+            await prisma.schoolAddress.delete({
+                where: {
+                    schoolId: id
+                }
+            });
+            const deleted = await prisma.school.delete({
+                where: {
+                    id: id
+                }
+            });
+            return deleted;
+        });
     }
 }
 //# sourceMappingURL=SchoolRepository.js.map

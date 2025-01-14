@@ -12,7 +12,7 @@ export interface School {
 interface Room {
   floor: string;
   identificator: string;
-  ceps: string;
+  cespe: string;
   chair_qtd: number;
   chair_type: string;
 }
@@ -22,5 +22,6 @@ interface Address {
   street: string;
   neighborhood: string;
   state: string;
-  city: string
+  city: string;
+  complement?: string
 }

@@ -118,9 +118,7 @@ CREATE TABLE `school` (
     `manager` VARCHAR(191) NOT NULL,
     `manager_email` VARCHAR(191) NOT NULL,
     `phone` VARCHAR(191) NOT NULL,
-    `schoolAddressId` INTEGER NOT NULL,
 
-    UNIQUE INDEX `school_schoolAddressId_key`(`schoolAddressId`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -129,7 +127,7 @@ CREATE TABLE `room` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `floor` VARCHAR(191) NOT NULL,
     `identificator` VARCHAR(191) NOT NULL,
-    `ceps` VARCHAR(191) NOT NULL,
+    `cespe` VARCHAR(191) NOT NULL,
     `chair_qtd` INTEGER NOT NULL,
     `chair_type` VARCHAR(191) NOT NULL,
     `schoolId` INTEGER NOT NULL,
@@ -145,7 +143,9 @@ CREATE TABLE `schoolAddress` (
     `neighborhood` VARCHAR(191) NOT NULL,
     `state` VARCHAR(191) NOT NULL,
     `city` VARCHAR(191) NOT NULL,
+    `schoolId` INTEGER NOT NULL,
 
+    UNIQUE INDEX `schoolAddress_schoolId_key`(`schoolId`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -171,7 +171,7 @@ ALTER TABLE `colaborator_external` ADD CONSTRAINT `colaborator_external_colabora
 ALTER TABLE `colaborator_external` ADD CONSTRAINT `colaborator_external_addressId_fkey` FOREIGN KEY (`addressId`) REFERENCES `address`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `school` ADD CONSTRAINT `school_schoolAddressId_fkey` FOREIGN KEY (`schoolAddressId`) REFERENCES `schoolAddress`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `room` ADD CONSTRAINT `room_schoolId_fkey` FOREIGN KEY (`schoolId`) REFERENCES `school`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `room` ADD CONSTRAINT `room_schoolId_fkey` FOREIGN KEY (`schoolId`) REFERENCES `school`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `schoolAddress` ADD CONSTRAINT `schoolAddress_schoolId_fkey` FOREIGN KEY (`schoolId`) REFERENCES `school`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
