@@ -1,7 +1,8 @@
 type optinalValueCreate = string | null;
 type optinalValueNumber = number | null;
+
 interface colaborator {
-  id: number;
+  id?: number;
   cpf: string;
   pis: optinalValueCreate;
   rg: optinalValueCreate;
@@ -23,8 +24,8 @@ interface colaborator {
   experience3: optinalValueCreate;
   location_proof: optinalValueCreate;
   type: optinalValueCreate;
-  update_at: Date;
-  created_at: Date;
+  updated_at?: Date;
+  created_at?: Date;
 }
 interface ColaboratorInner {
   renova: optinalValueNumber;
@@ -35,10 +36,24 @@ interface ColaboratorInner {
   registration: optinalValueCreate;
   sector: optinalValueCreate;
 }
+interface ColaboratorExt{
+  work: optinalValueCreate;
+  type: optinalValueCreate;
+  organ: optinalValueNumber;
+  renova: optinalValueNumber;
+  registration: optinalValueCreate;
+  sector: optinalValueCreate;
+  position: optinalValueCreate;
+}
 interface createColaborator {
   colaborador: colaborator;
   colaboradorInterno: ColaboratorInner;
   endereco: address;
+}
+interface createExternal{
+  colaborador: colaborator;
+  colaboradorExterno: ColaboratorExt;
+  endereco: address
 }
 interface address {
   complement: optinalValueCreate;

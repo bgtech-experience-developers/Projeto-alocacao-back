@@ -1,7 +1,8 @@
-import { exist } from "joi";
 import { CollaboratorInnerRepository } from "../repository/CollaboratorInnerCreate.js";
 import { CollaboratorError } from "../error/CollaboratorError.js";
+
 const instanceColaboratorRepository = new CollaboratorInnerRepository();
+
 export class ServiceCollaborator {
   static async create(body: createColaborator) {
     try {
@@ -69,3 +70,5 @@ export class ServiceCollaborator {
     }
   }
 }
+
+
