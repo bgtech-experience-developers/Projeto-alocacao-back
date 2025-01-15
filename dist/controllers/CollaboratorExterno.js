@@ -1,4 +1,4 @@
-import { ServiceCollaboratorExternal } from "../services/ServiceCollaborator.js";
+import { ServiceCollaboratorExternal } from "../services/ServiceExt.js";
 export class ControllerCollaboratorExterno {
     static async createColExt(request, response, next) {
         try {

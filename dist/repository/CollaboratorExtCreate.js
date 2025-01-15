@@ -3,9 +3,6 @@ export default class CollaboratorExtCreate {
     connection = InstanciaPrismas.createConnection();
     async createCollExt({ colaborador, colaboradorExterno, endereco }) {
         try {
-            if (!colaborador || !colaboradorExterno || !endereco) {
-                throw new Error("Dados invalidos no repository!");
-            }
             const transaction = this.connection.$transaction(async (tsx) => {
                 // Cadastro do colaborador
                 const colaboradorEx = await tsx.colaborator.create({ data: { ...colaborador } });
