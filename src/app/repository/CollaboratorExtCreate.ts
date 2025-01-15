@@ -7,10 +7,6 @@ export default class CollaboratorExtCreate {
 
     async createCollExt({colaborador, colaboradorExterno, endereco}: createExternal) {
         try {
-            if (!colaborador || !colaboradorExterno || !endereco) {
-                throw new Error("Dados invalidos no repository!")
-            }
-            
             const transaction = this.connection.$transaction(async (tsx) => {
                 // Cadastro do colaborador
                 const colaboradorEx = await tsx.colaborator.create({data: {...colaborador}});

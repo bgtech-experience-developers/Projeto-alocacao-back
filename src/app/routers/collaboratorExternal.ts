@@ -4,11 +4,11 @@ import { ControllerCollaboratorExterno } from '../controllers/CollaboratorExtern
 
 const routeExt = express.Router();
 
-routeExt.get("/:id", ControllerCollaboratorExterno.getUniqueCollExt);
 routeExt.get('/', ControllerCollaboratorExterno.getAllCollExt);
 routeExt.get('/all', ControllerCollaboratorExterno.getAll)
 routeExt.post("/registrar", ControllerCollaboratorExterno.createColExt);
 routeExt.delete("/deletar/:id", ControllerCollaboratorExterno.deleteColaborator);
+routeExt.get("/:id", ControllerCollaboratorExterno.getUniqueCollExt);
 
 routeExt.use(handleError);
 

@@ -1,4 +1,4 @@
-import { ServiceCollaboratorExternal } from "../services/ServiceCollaborator.js";
+import { ServiceCollaboratorExternal } from "../services/ServiceExt.js"
 import { Request, Response, NextFunction} from "express";
 
 export class ControllerCollaboratorExterno {
