@@ -42,7 +42,8 @@ export class SchoolRepository {
                             street: body.address.street,
                             neighborhood: body.address.neighborhood,
                             state: body.address.state,
-                            city: body.address.city
+                            city: body.address.city,
+                            complement: body.address.complement
                         }
                     },
                     rooms: {
