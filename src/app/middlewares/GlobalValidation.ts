@@ -1,4 +1,4 @@
-import { AllError } from "../error/CollaboratorError.js";
+import { AllError } from "../error/AllError.js";
 import { Request, Response, NextFunction } from "express";
 import { TypeGuardCollaboratorInner } from "../guards/CollaboratorGuard.js";
 import Joi, { number } from "joi";

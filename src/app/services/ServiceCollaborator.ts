@@ -1,9 +1,10 @@
 import { exist, when } from "joi";
 import { CollaboratorInnerRepository } from "../repository/CollaboratorInnerCreate.js";
 import CollaboratorExtCreate from "../repository/CollaboratorExtCreate.js";
-import { AllError } from "../error/CollaboratorError.js";
-import { CollaboratorExternalValidation } from "../utils/Joi/CollaboratorExternalValidation.js";
+import { AllError } from "../error/AllError.js";
+import { CollaboratorExternalValidation } from "../validations/CollaboratorExternalValidation.js";
 import { log } from "console";
+
 const instanceColaboratorRepository = new CollaboratorInnerRepository();
 const instanceColaboratorExtRepository = new CollaboratorExtCreate();
 
@@ -167,9 +168,8 @@ export class ServiceCollaboratorExternal {
       if(!Number(id)) {
         throw new AllError("Parâmetro inválido!", 404);
       }
-      const collaboratorValidation = new CollaboratorExternalValidation()
-      const schema =  collaboratorValidation.validate(body)
-
+      const collaboratorValidation = new CollaboratorExternalValidation();
+      const schema =  collaboratorValidation.validate(body);;
       const collaborator = await instanceColaboratorExtRepository.getUniqueExt(id);
       
       // Tenho um dilema, se a pessoa quiser não quiser atualizar o cpf?

@@ -7,21 +7,6 @@ export class CollaboratorExternalValidation extends AbstractJoiValidation {
         // Outra funcionalidade que tenho que fazer é sanitização dos campos
         return {
             colaborador: CollaboratorExternalValidation.collaboratorSchema(),
-            // colaboradorExterno: Joi.object<ColaboratorExt>({
-            //     work: Joi.string().optional().allow(""),
-            //     type: Joi.string().optional().allow(""),
-            //     organ: Joi.number().optional().allow(""),
-            //     renova: Joi.number().optional().allow(""),
-            //     registration: Joi.string().optional().allow(""),
-            //     sector: Joi.string().optional().allow(""),
-            //     position: Joi.string().optional().allow(""),
-            // }),
-            // endereco: Joi.object<address>({
-            //     complement: Joi.string().optional().allow(""),
-            //     street: Joi.string().optional().allow(""),
-            //     cep: Joi.string().optional().allow(""),
-            //     neighborhood: Joi.string().optional().allow(""),
-            // }),
             colaboradorExterno: CollaboratorExternalValidation.collaboratorExtSchema(),
             endereco: CollaboratorExternalValidation.collaboratorAddress(),
         };

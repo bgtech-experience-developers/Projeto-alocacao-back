@@ -1,7 +1,7 @@
 import Joi from "joi";
-import { threadId } from "worker_threads";
-import { AllError } from "../../error/CollaboratorError.js";
+import { AllError } from "../error/AllError.js";
 
+// TypeGuard Oque é ? Como usar na aplicação!
 export abstract class  AbstractJoiValidation {
     // A função que retornará objeto válido para o validate
     abstract rules(): object;

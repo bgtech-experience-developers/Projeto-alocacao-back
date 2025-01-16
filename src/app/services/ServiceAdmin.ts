@@ -1,5 +1,5 @@
 
-import { AllError } from "../error/CollaboratorError.js";
+import { AllError } from "../error/AllError.js";
 import { Admin, AdminRepository } from "../repository/AdminRepository.js";
 import { HashSenha } from "../utils/Bycrpt.js";
 import { JwtToken } from "../utils/Jwt.js";

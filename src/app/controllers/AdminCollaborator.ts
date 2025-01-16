@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { ServiceAdmin } from "../services/ServiceAdmin.js";
 import { Collaborator } from "../middlewares/CollaboratorValidator.js";
-import { AllError } from "../error/CollaboratorError.js";
+import { AllError } from "../error/AllError.js";
 import { Admin } from "../repository/AdminRepository.js";
 interface Permissions {
   criar: string;
