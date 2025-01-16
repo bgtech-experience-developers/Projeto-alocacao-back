@@ -1,10 +1,10 @@
 import { SchoolError } from "../error/SchoolError.js";
 import { SchoolRepository } from "../repository/SchoolRepository.js";
 export class ServiceSchool {
-    async getSchoolService() {
+    async getSchoolService(limit, page) {
         const { getAll } = new SchoolRepository();
         try {
-            const schools = await getAll();
+            const schools = await getAll(limit, page);
             return schools;
         }
         catch (error) {

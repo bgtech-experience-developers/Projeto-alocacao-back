@@ -59,4 +59,22 @@ export class SchoolMiddleWare {
       return response.status(500).json({error: 'Internal server error'})
     }
   }
+
+  async getAllSchoolsRequest(request: Request, response: Response, next: NextFunction): Promise<{error: string | undefined} | any> {
+    try {
+      const query = request.query
+
+      if(query && 'limit' in query && 'page' in query) {
+        next()
+      } else {
+        throw new SchoolError('Os parametros page e limit são obrigatórios')
+      }
+    } catch (error) {
+      if(error instanceof SchoolError) {
+        return response.status(error.status).json({error: error.message})
+      }
+
+      return response.status(500).json({error: 'Internal server error'})
+    }
+  }
 }

@@ -3,10 +3,11 @@ import type { School } from "../interfaces/school.js";
 import { SchoolRepository } from "../repository/SchoolRepository.js"
 
 export class ServiceSchool {
-  async getSchoolService() {
+  async getSchoolService(limit: number, page: number) {
     const { getAll } = new SchoolRepository()
     try {
-      const schools = await getAll()
+      const schools = await getAll(limit, page)
+
       return schools
     } catch (error) {
       console.log(error);

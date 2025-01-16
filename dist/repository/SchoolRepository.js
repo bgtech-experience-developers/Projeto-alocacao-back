@@ -1,20 +1,16 @@
 import { PrismaClient } from '@prisma/client';
 const connection = new PrismaClient();
 export class SchoolRepository {
-    async getAll() {
-        try {
-            const schools = await connection.school.findMany({
-                include: {
-                    address: true,
-                    rooms: true
-                }
-            });
-            return schools;
-        }
-        catch (error) {
-            console.log(error);
-            throw error;
-        }
+    async getAll(limit, page) {
+        const schools = await connection.school.findMany({
+            include: {
+                address: true,
+                rooms: true,
+            },
+            take: limit,
+            skip: page
+        });
+        return schools;
     }
     async getUnique(id) {
         return await connection.school.findUnique({

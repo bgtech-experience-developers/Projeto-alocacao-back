@@ -6,7 +6,12 @@ export class School {
   async getAllSchool(request: Request, response: Response, next: NextFunction) {
     const {getSchoolService} = service
     try {
-      const schools = await getSchoolService()
+      const query = request.query
+      const queryPage = Number(query.page) || 1
+      const limit = Number(query.limit) | 5 
+      const page = (queryPage - 1) * limit
+      
+      const schools = await getSchoolService(limit, page)
       response.status(200).json(schools)
     } catch (error) {
       console.log(error);
