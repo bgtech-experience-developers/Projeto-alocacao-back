@@ -20,7 +20,7 @@ model admin {
   email       String        @unique
   admin_roles Admin_roles[]
   created_at  DateTime      @default(now())
-  uptade_at   DateTime      @default(now())
+  updated_at   DateTime      @default(now())
 }
 
 model Admin_roles {
@@ -38,7 +38,7 @@ model roles {
   permisson   String
   admin_roles Admin_roles[]
   created_at  DateTime      @default(now())
-  uptade_at   DateTime      @default(now())
+  updated_at   DateTime      @default(now())
 }
 
 model colaborator_inner {
@@ -63,7 +63,7 @@ model colaborator_inner_address {
   colaborator_inner   colaborator_inner @relation(fields: [colaborator_innerId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   address             address           @relation(fields: [addressId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   created_at          DateTime          @default(now())
-  uptade_at           DateTime          @default(now())
+  updated_at           DateTime          @default(now())
 
   @@id([colaborator_innerId, addressId])
 }
@@ -93,21 +93,37 @@ model colaborator {
   experience3          String?                @db.VarChar(150)
   location_proof       String?                @db.VarChar(90)
   created_at           DateTime               @default(now())
-  update_at            DateTime               @default(now())
+  updated_at            DateTime               @default(now())
   colaborator_inner    colaborator_inner[]
   colaborator_external colaborator_external[]
 }
 
 model colaborator_external {
+  id                     Int @id @default(autoincrement())
+  idColaborator          Int
+  work                   String? @db.VarChar(3)
+  type                   String? @db.VarChar(20)
+  organ                  Int?
+  renova                 Int?
+  registration           String? @db.VarChar(20)
+  sector                 String? @db.VarChar(60)
+  position               String? @db.VarChar(60)
+  colaborator            colaborator @relation(fields: [idColaborator], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  colaborator_external_address colaborator_external_address[]
+
+}
+
+model colaborator_external_address {
   colaborator_externalId Int
-  addressId              Int
-  colaborator            colaborator @relation(fields: [colaborator_externalId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  address                address     @relation(fields: [addressId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  created_at             DateTime    @default(now())
-  uptade_at              DateTime    @default(now())
+  addressId Int
+  colaborator_external colaborator_external @relation(fields: [colaborator_externalId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  address address @relation(fields: [addressId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
 
   @@id([colaborator_externalId, addressId])
 }
+
 
 model address {
   id                        Int                         @id @default(autoincrement())
@@ -115,8 +131,8 @@ model address {
   street                    String?
   cep                       String?
   neighborhood              String?
-  created_at                DateTime                    @default(now())
-  uptade_at                 DateTime                    @default(now())
+  created_at                DateTime                    @default(now())   
+  updated_at                 DateTime                    @default(now())
   colaborator_inner_address colaborator_inner_address[]
-  colaborator_external      colaborator_external[]
+  colaborator_external_address      colaborator_external_address[]
 }

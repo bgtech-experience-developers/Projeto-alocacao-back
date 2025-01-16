@@ -1,4 +1,4 @@
-export class CollaboratorError extends Error {
+export class AllError extends Error {
     status;
     constructor(message, status = 400) {
         super(message);

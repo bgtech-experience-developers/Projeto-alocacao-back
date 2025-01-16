@@ -1,0 +1,40 @@
+{
+  "colaborador": {
+    "cpf": "02300699313",
+    "pis": "14012311240",
+    "rg": "103024240",
+    "name": "Nome Completo",
+    "phone1": "400230034",
+    "cell_phone1": "-234321-4432-",
+    "phone2": "432040134320",
+    "cell_phone2": "432040134987",
+    "cod_bank": "123",
+    "type": "tipo",
+    "sex": 1,
+    "education": 2,
+    "status": true,
+    "agency": "bancaria",
+    "account": "conta",
+    "type_account": 1,
+    "variation": 123,
+    "experience1": "não tenho",
+    "experience2": "piorou",
+    "experience3": "vish",
+    "location_proof": "unifor"
+  },
+  "colaboradorExterno": {
+    "work": "job",
+    "renova": 1,
+    "type": "naosei",
+    "organ": 1,
+    "position": "lateral direito",
+    "registration": "estado",
+    "sector": "comercial"
+  },
+  "endereco": {
+    "complement": "casa",
+    "street": "rua dos patos",
+    "cep": "12345678",
+    "neighborhood": "lagoa"
+  }
+}

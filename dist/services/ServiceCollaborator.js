@@ -1,6 +1,9 @@
 import { CollaboratorInnerRepository } from "../repository/CollaboratorInnerCreate.js";
-import { CollaboratorError } from "../error/CollaboratorError.js";
+import CollaboratorExtCreate from "../repository/CollaboratorExtCreate.js";
+import { AllError } from "../error/CollaboratorError.js";
+import { CollaboratorExternalValidation } from "../utils/Joi/CollaboratorExternalValidation.js";
 const instanceColaboratorRepository = new CollaboratorInnerRepository();
+const instanceColaboratorExtRepository = new CollaboratorExtCreate();
 export class ServiceCollaborator {
     static async create(body) {
         try {
@@ -8,7 +11,7 @@ export class ServiceCollaborator {
             if (!colaboratorRegister) {
                 return await instanceColaboratorRepository.createCollaborator(body);
             }
-            throw new CollaboratorError("colaborador ja cadastrado no sistema");
+            throw new AllError("colaborador ja cadastrado no sistema");
         }
         catch (error) {
             throw error;
@@ -34,7 +37,7 @@ export class ServiceCollaborator {
         try {
             const collaborator = await instanceColaboratorRepository.getUnique(id);
             if (!collaborator) {
-                throw new CollaboratorError("colaborador não encontrado", 400);
+                throw new AllError("colaborador não encontrado", 400);
             }
             return collaborator;
         }
@@ -49,7 +52,98 @@ export class ServiceCollaborator {
                 const result = await instanceColaboratorRepository.deleteCollaborator(id);
                 return result;
             }
-            throw new CollaboratorError("colaborador não encontrado no sistema");
+            throw new AllError("colaborador não encontrado no sistema");
+        }
+        catch (error) {
+            throw error;
+        }
+    }
+}
+export class ServiceCollaboratorExternal {
+    static async createColl(body) {
+        try {
+            // if (!body.colaborador || !body.colaboradorExterno || !body.endereco) {
+            //   throw new Error('Dados invalidos no service!')
+            // }
+            console.log("body recebido:", body.colaborador);
+            const colaboratorRegister = await instanceColaboratorExtRepository.getUniqueExt(undefined, body.colaborador.cpf);
+            if (colaboratorRegister === null) {
+                return await instanceColaboratorExtRepository.createCollExt(body);
+            }
+            else {
+                throw new AllError("Colaborador já existe!");
+            }
+        }
+        catch (error) {
+            throw error;
+        }
+    }
+    static async getAllExternal(status, page, limit, queryStatus = 1) {
+        try {
+            if (status) {
+                queryStatus = status === "true" ? 1 : 0;
+            }
+            else {
+                queryStatus = null;
+            }
+            return await instanceColaboratorExtRepository.getAllColl(queryStatus, page, limit);
+        }
+        catch (error) {
+            throw error;
+        }
+    }
+    ;
+    static async findAllExternal(status, page, limit) {
+        try {
+            const queryStatus = typeof status === 'boolean' ? (status ? 1 : 0) : null;
+            const colaborator = await instanceColaboratorExtRepository.simpleGetAll(queryStatus, page, limit);
+            return colaborator;
+        }
+        catch (error) {
+            console.error("Erro em getAllSimple", error);
+            throw new Error("Colaboradores Externos não encontrados");
+        }
+    }
+    ;
+    static async getUnique(id) {
+        try {
+            const collaborator = await instanceColaboratorExtRepository.getUniqueExt(id);
+            if (collaborator === null) {
+                throw new AllError("Colaborador não encontrado", 400);
+            }
+            return collaborator;
+        }
+        catch (error) {
+            throw error;
+        }
+    }
+    static async deleteColl(id) {
+        try {
+            const collaborator = await instanceColaboratorExtRepository.getUniqueExt(id);
+            if (collaborator) {
+                const result = await instanceColaboratorExtRepository.deleteCollaboratorExt(id);
+                return result;
+            }
+            throw new AllError("Colaborador não cadastrado no sistema!");
+        }
+        catch (error) {
+            throw error;
+        }
+    }
+    static async updateColl(id, body) {
+        try {
+            if (!Number(id)) {
+                throw new AllError("Parâmetro inválido!", 404);
+            }
+            const collaboratorValidation = new CollaboratorExternalValidation();
+            const schema = collaboratorValidation.validate(body);
+            const collaborator = await instanceColaboratorExtRepository.getUniqueExt(id);
+            // Tenho um dilema, se a pessoa quiser não quiser atualizar o cpf?
+            if (!collaborator) {
+                throw new AllError("Colaborador não cadastrado no sistema!");
+            }
+            await instanceColaboratorExtRepository.updateCollaboratorExt(body, Number(id));
+            return;
         }
         catch (error) {
             throw error;

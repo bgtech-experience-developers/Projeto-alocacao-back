@@ -1,4 +1,4 @@
-import { CollaboratorError } from "../error/CollaboratorError.js";
+import { AllError } from "../error/AllError.js";
 import { Request, Response, NextFunction } from "express";
 import { TypeGuardCollaboratorInner } from "../guards/CollaboratorGuard.js";
 import Joi, { number } from "joi";
@@ -21,7 +21,7 @@ export class ValidatorCollaboratorInner {
       });
       console.log(error);
       if (error.length != 0) {
-        throw new CollaboratorError("campos invalidos", 400);
+        throw new AllError("campos invalidos", 400);
       }
       next();
     } catch (error) {
@@ -39,7 +39,7 @@ export class ValidatorCollaboratorInner {
           id: Number(req.params.id),
         });
       if (error) {
-        throw new CollaboratorError("dado não suportado para o campo", 400);
+        throw new AllError("dado não suportado para o campo", 400);
       }
       next();
     } catch (error) {
@@ -50,7 +50,7 @@ export class ValidatorCollaboratorInner {
     try {
       const { value, error } = typeguardLogin().validate(req.body);
       if (error) {
-        throw new CollaboratorError("email e senha são necessários", 400);
+        throw new AllError("email e senha são necessários", 400);
       }
       next();
     } catch (error) {
@@ -63,7 +63,7 @@ export class ValidatorCollaboratorInner {
 
       if (error) {
         console.log(error.message);
-        throw new CollaboratorError(error.message);
+        throw new AllError(error.message);
       }
       const permissions = req.query.permissions as string;
 
@@ -83,7 +83,7 @@ export class ValidatorCollaboratorInner {
             }
           });
           if (allpermission.length === 0) {
-            throw new CollaboratorError(
+            throw new AllError(
               "adicione pelo menos uma permissão para este administrador"
             );
           }
@@ -94,9 +94,9 @@ export class ValidatorCollaboratorInner {
           next();
           return;
         }
-        throw new CollaboratorError("envie uma permissão entre 1 e 4");
+        throw new AllError("envie uma permissão entre 1 e 4");
       } else {
-        throw new CollaboratorError(
+        throw new AllError(
           "envie a propriedade permission para poder adicionar uma permissão ao administrador"
         );
       }

@@ -1,7 +1,7 @@
-import { CollaboratorError } from "../error/CollaboratorError.js";
+import { AllError } from "../error/CollaboratorError.js";
 export const handleError = (error, request, response, next // duas camadas
 ) => {
-    if (error instanceof CollaboratorError) {
+    if (error instanceof AllError) {
         response.status(error.status).json({ message: error.message });
         return;
     }

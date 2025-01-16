@@ -10,6 +10,9 @@
     "preServer": "npm run build && npm run server",
     "server": " concurrently \"nodemon ./dist/server.js\"   \"npx tsc -w\" "
   },
+  "prisma": {
+    "seed": "node ./dist/seed.js"
+  },
   "author": "",
   "license": "ISC",
   "dependencies": {
@@ -17,6 +20,7 @@
     "@types/bcrypt": "^5.0.2",
     "@types/dotenv": "^8.2.3",
     "@types/express": "^5.0.0",
+    "@types/node": "^22.10.5",
     "concurrently": "^9.0.1",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
@@ -27,6 +31,7 @@
     "rimraf": "^6.0.1"
   },
   "devDependencies": {
+    "@faker-js/faker": "^9.3.0",
     "@types/jsonwebtoken": "^9.0.7",
     "bcrypt": "^5.1.1",
     "nodemon": "^3.1.7",
