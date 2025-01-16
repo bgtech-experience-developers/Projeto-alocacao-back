@@ -66,7 +66,9 @@ export class ControllerCollaboratorExterno {
     }
     static async updateColaborator(request, response, next) {
         try {
-            response.status(201).json("Hello World");
+            console.log(request.body);
+            const resultQuery = await ServiceCollaboratorExternal.updateColl(Number(request.params.id), request.body);
+            response.status(201).json(resultQuery);
         }
         catch (error) {
             next(error);

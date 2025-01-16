@@ -119,7 +119,34 @@ export default class CollaboratorExtCreate {
         }
     }
     ;
-    static async updateCollaboratorExt() {
+    async updateCollaboratorExt({ colaborador, colaboradorExterno, endereco }, id) {
+        try {
+            await this.connection.colaborator.update({
+                where: {
+                    id
+                },
+                data: {
+                    ...colaborador,
+                    colaborator_external: {
+                        create: {
+                            ...colaboradorExterno,
+                            colaborator_external_address: {
+                                create: {
+                                    address: {
+                                        create: {
+                                            ...endereco
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        catch (error) {
+            throw error;
+        }
     }
 }
 //# sourceMappingURL=CollaboratorExtCreate.js.map

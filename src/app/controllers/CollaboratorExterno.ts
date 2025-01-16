@@ -81,11 +81,14 @@ export class ControllerCollaboratorExterno {
         }
     }
 
-    static async updateColaborator(request: Request, response: Response,next: NextFunction) {
+    static async updateColaborator(request: Request<{id: number}>, response: Response, next: NextFunction) {
         try {
-            response.status(201).json("Hello World")
+            console.log(request.body);
+            const resultQuery = await ServiceCollaboratorExternal.updateColl(Number(request.params.id), request.body)
+            
+            response.status(201).json(resultQuery);
         } catch(error) {
-            next(error)
+            next(error);
         }
     }
 }

@@ -7,6 +7,7 @@ interface colaborator {
   pis: optinalValueCreate;
   rg: optinalValueCreate;
   name: optinalValueCreate;
+  status: (boolean) 
   sex: optinalValueNumber;
   education: optinalValueNumber;
   phone1: optinalValueCreate;
@@ -27,6 +28,7 @@ interface colaborator {
   updated_at?: Date;
   created_at?: Date;
 }
+
 interface ColaboratorInner {
   renova: optinalValueNumber;
   work: optinalValueCreate;
@@ -36,6 +38,7 @@ interface ColaboratorInner {
   registration: optinalValueCreate;
   sector: optinalValueCreate;
 }
+
 interface ColaboratorExt{
   work: optinalValueCreate;
   type: optinalValueCreate;
@@ -45,22 +48,58 @@ interface ColaboratorExt{
   sector: optinalValueCreate;
   position: optinalValueCreate;
 }
+
 interface createColaborator {
   colaborador: colaborator;
   colaboradorInterno: ColaboratorInner;
   endereco: address;
 }
+
 interface createExternal{
   colaborador: colaborator;
   colaboradorExterno: ColaboratorExt;
   endereco: address
 }
+
+interface updateExternal extends createExternal{}
+
+interface updateExternalJoi {
+  colaborator : {
+    id?: number;
+    // cpf: StringSchema<string>;
+    pis: optinalValueCreate;
+    rg: optinalValueCreate;
+    name: optinalValueCreate;
+    sex: optinalValueNumber;
+    education: optinalValueNumber;
+    phone1: optinalValueCreate;
+    cell_phone1: optinalValueCreate;
+    phone2: optinalValueCreate;
+    cell_phone2: optinalValueCreate;
+    cod_bank: optinalValueCreate;
+    agency: optinalValueCreate;
+    account: optinalValueCreate;
+    type_account: optinalValueNumber;
+    variation: optinalValueNumber;
+    email: optinalValueCreate;
+    experience1: optinalValueCreate;
+    experience2: optinalValueCreate;
+    experience3: optinalValueCreate;
+    location_proof: optinalValueCreate;
+    type: optinalValueCreate;
+    updated_at?: Date;
+    created_at?: Date;
+  }
+}
+
 interface address {
   complement: optinalValueCreate;
   street: optinalValueCreate;
   cep: optinalValueCreate;
   neighborhood: optinalValueCreate;
 }
+
+
 interface login {
   email: string;
   password: string;

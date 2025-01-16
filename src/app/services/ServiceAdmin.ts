@@ -1,5 +1,5 @@
 
-import { CollaboratorError } from "../error/CollaboratorError.js";
+import { AllError } from "../error/CollaboratorError.js";
 import { Admin, AdminRepository } from "../repository/AdminRepository.js";
 import { HashSenha } from "../utils/Bycrpt.js";
 import { JwtToken } from "../utils/Jwt.js";
@@ -12,7 +12,7 @@ export class ServiceAdmin {
     try {
       if (!admin) {
         // verifica se esse admin existe
-        throw new CollaboratorError("admin inexistente", 400);
+        throw new AllError("admin inexistente", 400);
       }
       const comparePassword = await HashSenha.comparePassword(
         password,
@@ -20,7 +20,7 @@ export class ServiceAdmin {
       );
       if (!comparePassword) {
         // verificar se a senha criptografada é a mesma criptografia da senha plana enviada
-        throw new CollaboratorError("senhas não coincidem");
+        throw new AllError("senhas não coincidem");
       }
       const Role: roles[] = [
         { name: "admin", permisson: "delete" },
@@ -38,7 +38,7 @@ export class ServiceAdmin {
         body.email
       );
       if (adminRegister) {
-        throw new CollaboratorError("adminstrador ja registrado no sistema");
+        throw new AllError("adminstrador ja registrado no sistema");
       }
       body.password = await HashSenha.createPasswordCript(body.password, 10);
 

@@ -138,8 +138,35 @@ export default class CollaboratorExtCreate {
         }
     };
 
-    static async updateCollaboratorExt() {
-        
+    async updateCollaboratorExt({colaborador, colaboradorExterno, endereco}: updateExternal, id: number): Promise<void> {
+        try {
+            await this.connection.colaborator.update({
+                where: {
+                    id
+                },
+                data: {
+                    ...colaborador,
+                    colaborator_external: {
+                       create: {
+                            ...colaboradorExterno,
+                            colaborator_external_address: {
+                                create: {
+                                    address: {
+                                        create: {
+                                            ...endereco
+                                        }
+                                    }
+                                }
+                            }
+                       }
+                        
+                    }
+                }
+            })
+        }
+        catch(error) {
+            throw error;
+        }
     }
 
 

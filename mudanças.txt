@@ -1,0 +1,1 @@
+Mundança de nome da classe de error, para AllError

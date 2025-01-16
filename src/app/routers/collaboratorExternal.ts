@@ -7,7 +7,7 @@ const routeExt = express.Router();
 routeExt.get('/', ControllerCollaboratorExterno.getAllCollExt);
 routeExt.get('/all', ControllerCollaboratorExterno.getAll)
 routeExt.post("/registrar", ControllerCollaboratorExterno.createColExt);
-routeExt.patch("/atualizar", ControllerCollaboratorExterno.updateColaborator)
+routeExt.patch("/:id", ControllerCollaboratorExterno.updateColaborator)
 routeExt.delete("/deletar/:id", ControllerCollaboratorExterno.deleteColaborator);
 routeExt.get("/:id", ControllerCollaboratorExterno.getUniqueCollExt);
 

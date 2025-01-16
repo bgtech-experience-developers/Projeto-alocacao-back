@@ -1,7 +1,8 @@
 import { exist, when } from "joi";
 import { CollaboratorInnerRepository } from "../repository/CollaboratorInnerCreate.js";
 import CollaboratorExtCreate from "../repository/CollaboratorExtCreate.js";
-import { CollaboratorError } from "../error/CollaboratorError.js";
+import { AllError } from "../error/CollaboratorError.js";
+import { CollaboratorExternalValidation } from "../utils/Joi/CollaboratorExternalValidation.js";
 import { log } from "console";
 const instanceColaboratorRepository = new CollaboratorInnerRepository();
 const instanceColaboratorExtRepository = new CollaboratorExtCreate();
@@ -16,11 +17,12 @@ export class ServiceCollaborator {
       if (!colaboratorRegister) {
         return await instanceColaboratorRepository.createCollaborator(body);
       }
-      throw new CollaboratorError("colaborador ja cadastrado no sistema");
+      throw new AllError("colaborador ja cadastrado no sistema");
     } catch (error) {
       throw error;
     }
   }
+
   static async getAll(
     status: string | null,
     page: number,
@@ -50,7 +52,7 @@ export class ServiceCollaborator {
     try {
       const collaborator = await instanceColaboratorRepository.getUnique(id);
       if (!collaborator) {
-        throw new CollaboratorError("colaborador não encontrado", 400);
+        throw new AllError("colaborador não encontrado", 400);
       }
       return collaborator;
     } catch (error) {
@@ -67,7 +69,7 @@ export class ServiceCollaborator {
         );
         return result;
       }
-      throw new CollaboratorError("colaborador não encontrado no sistema");
+      throw new AllError("colaborador não encontrado no sistema");
     } catch (error) {
       throw error;
     }
@@ -91,7 +93,7 @@ export class ServiceCollaboratorExternal {
       if (colaboratorRegister === null) {
         return await instanceColaboratorExtRepository.createCollExt(body);
       } else {
-        throw new CollaboratorError("Colaborador já existe!")
+        throw new AllError("Colaborador já existe!")
       }
 
     } catch (error) {
@@ -137,7 +139,7 @@ export class ServiceCollaboratorExternal {
     try {
       const collaborator = await instanceColaboratorExtRepository.getUniqueExt(id);
       if (collaborator === null) {
-        throw new CollaboratorError("Colaborador não encontrado", 400)
+        throw new AllError("Colaborador não encontrado", 400)
       }
       return collaborator;
 
@@ -153,10 +155,37 @@ export class ServiceCollaboratorExternal {
         const result = await instanceColaboratorExtRepository.deleteCollaboratorExt(id)
         return result;
       }
-      throw new CollaboratorError("Colaborador não cadastrado no sistema!")
+      throw new AllError("Colaborador não cadastrado no sistema!")
 
     } catch (error) {
       throw error;
     }
   }
+
+  static async updateColl(id: number, body: updateExternal): Promise<void> {
+    try {
+      if(!Number(id)) {
+        throw new AllError("Parâmetro inválido!", 404);
+      }
+      const collaboratorValidation = new CollaboratorExternalValidation()
+      const schema =  collaboratorValidation.validate(body)
+
+      const collaborator = await instanceColaboratorExtRepository.getUniqueExt(id);
+      
+      // Tenho um dilema, se a pessoa quiser não quiser atualizar o cpf?
+      if(!collaborator) {
+        throw new AllError("Colaborador não cadastrado no sistema!");
+      }
+
+      await instanceColaboratorExtRepository.updateCollaboratorExt(body, Number(id))
+      
+      return 
+      
+
+    } catch(error) {
+        throw error;
+    }
+  } 
 }
+
+

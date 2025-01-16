@@ -1,4 +1,4 @@
-import { CollaboratorError } from "../error/CollaboratorError.js";
+import { AllError } from "../error/CollaboratorError.js";
 import { TypeGuardCollaboratorInner } from "../guards/CollaboratorGuard.js";
 const { typeGuardCollaboratorInnerCreate, typeGuardCollaboratorInnerDeleteAndGetUnique, typeguardLogin, typeguardCreateAdm, } = new TypeGuardCollaboratorInner();
 export class ValidatorCollaboratorInner {
@@ -10,7 +10,7 @@ export class ValidatorCollaboratorInner {
             });
             console.log(error);
             if (error.length != 0) {
-                throw new CollaboratorError("campos invalidos", 400);
+                throw new AllError("campos invalidos", 400);
             }
             next();
         }
@@ -24,7 +24,7 @@ export class ValidatorCollaboratorInner {
                 id: Number(req.params.id),
             });
             if (error) {
-                throw new CollaboratorError("dado não suportado para o campo", 400);
+                throw new AllError("dado não suportado para o campo", 400);
             }
             next();
         }
@@ -36,7 +36,7 @@ export class ValidatorCollaboratorInner {
         try {
             const { value, error } = typeguardLogin().validate(req.body);
             if (error) {
-                throw new CollaboratorError("email e senha são necessários", 400);
+                throw new AllError("email e senha são necessários", 400);
             }
             next();
         }
@@ -49,7 +49,7 @@ export class ValidatorCollaboratorInner {
             const { error, value } = typeguardCreateAdm().validate(req.body);
             if (error) {
                 console.log(error.message);
-                throw new CollaboratorError(error.message);
+                throw new AllError(error.message);
             }
             const permissions = req.query.permissions;
             const permissionsAdms = [
@@ -68,7 +68,7 @@ export class ValidatorCollaboratorInner {
                         }
                     });
                     if (allpermission.length === 0) {
-                        throw new CollaboratorError("adicione pelo menos uma permissão para este administrador");
+                        throw new AllError("adicione pelo menos uma permissão para este administrador");
                     }
                     req.body.allpermission = allpermission.map((permission) => {
                         return Number(permission);
@@ -76,10 +76,10 @@ export class ValidatorCollaboratorInner {
                     next();
                     return;
                 }
-                throw new CollaboratorError("envie uma permissão entre 1 e 4");
+                throw new AllError("envie uma permissão entre 1 e 4");
             }
             else {
-                throw new CollaboratorError("envie a propriedade permission para poder adicionar uma permissão ao administrador");
+                throw new AllError("envie a propriedade permission para poder adicionar uma permissão ao administrador");
             }
         }
         catch (error) {
