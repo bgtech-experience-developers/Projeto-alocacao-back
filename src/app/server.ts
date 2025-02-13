@@ -10,6 +10,7 @@ import { handleError } from "./middlewares/HandleError.js";
 
 const app = express();
 const port = Number(process.env.PORTA);
+const host = "0.0.0.0";
 
 app.use(express.json());
 app.use("/escolas", schoolRoute);
@@ -21,6 +22,6 @@ app.use(
 app.use("/adms", adminRouter);
 app.use(handleError);
 
-app.listen(port, () => {
+app.listen(port, host, () => {
   console.log("servidor está rodando na porta +", port);
 });
