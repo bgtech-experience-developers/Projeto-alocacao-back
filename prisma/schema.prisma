@@ -1,0 +1,89 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model admin {
+  id          Int           @id @default(autoincrement())
+  name        String        @db.VarChar(40)
+  password    String
+  email       String        @unique
+  admin_roles Admin_roles[]
+  created_at  DateTime      @default(now())
+  uptade_at   DateTime      @default(now())
+}
+
+model Admin_roles {
+  adminID     Int
+  rolesID     Int
+  adminEntity admin @relation(fields: [adminID], references: [id])
+  rolesEntity roles @relation(fields: [rolesID], references: [id])
+
+  @@id([adminID, rolesID])
+}
+
+model roles {
+  id          Int           @id @default(autoincrement())
+  name        String
+  permisson   String
+  admin_roles Admin_roles[]
+  created_at  DateTime      @default(now())
+  uptade_at   DateTime      @default(now())
+}
+
+model school {
+  id                Int              @id @default(autoincrement())
+  name_school       String
+  cnpj              String           @unique @db.VarChar(14)
+  answerable_school String
+  answerable_email  String
+  answerable_phone  String
+  class_room        class_room[]
+  school_address    school_address[]
+}
+
+model class_room {
+  id           Int      @id @default(autoincrement())
+  floor        String
+  number_class String   @unique
+  amount_chair String
+  type_chair   String
+  id_school    Int
+  school       school   @relation(fields: [id_school], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  created_at   DateTime @default(now())
+  uptade_at    DateTime @default(now())
+}
+
+model school_address {
+  id_school  Int
+  id_address Int
+  address    address  @relation(fields: [id_address], references: [id])
+  school     school   @relation(fields: [id_school], references: [id])
+  created_at DateTime @default(now())
+  uptade_at  DateTime @default(now())
+
+  @@id([id_school, id_address])
+}
+
+model address {
+  id             Int              @id @default(autoincrement())
+  number         String?
+  street         String?
+  cep            String?
+  neighborhood   String?
+  state          String?
+  city           String?
+  school_address school_address[]
+  created_at     DateTime         @default(now())
+  uptade_at      DateTime         @default(now())
+}

@@ -1,0 +1,11 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API-ERP",
+        "version": "1.0.0",
+        "description": "Documentação da API-ERP usando Swagger"
+    },
+    "servers": [
+        { "url": "http://localhost:3000", "description": "rota da api local" }
+    ]
+}

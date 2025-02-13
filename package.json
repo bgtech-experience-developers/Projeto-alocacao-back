@@ -1,0 +1,38 @@
+{
+  "name": "alocacao",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./src/server.js",
+  "type": "module",
+  "scripts": {
+    "start": "nodemon ./dist/server.js",
+    "build": "rimraf ./dist && tsc",
+    "preServer": "npm run build && npm run server",
+    "server": " concurrently \"nodemon ./dist/server.js\"   \"npx tsc -w\" "
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@prisma/client": "^5.20.0",
+    "@types/bcrypt": "^5.0.2",
+    "@types/dotenv": "^8.2.3",
+    "@types/express": "^5.0.0",
+    "@types/swagger-ui-express": "^4.1.7",
+    "concurrently": "^9.0.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.0",
+    "joi": "^17.13.3",
+    "jsonwebtoken": "^9.0.2",
+    "pg": "^8.13.0",
+    "rimraf": "^6.0.1",
+    "swagger": "^0.7.5",
+    "swagger-ui-express": "^5.0.1"
+  },
+  "devDependencies": {
+    "@types/jsonwebtoken": "^9.0.7",
+    "bcrypt": "^5.1.1",
+    "nodemon": "^3.1.7",
+    "prisma": "^5.20.0"
+  }
+}
