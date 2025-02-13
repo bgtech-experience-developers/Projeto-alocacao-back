@@ -18,6 +18,7 @@ export class ControllerCollaboratorInner {
             const page = Number(query.page) ? Number(query.page) * 10 : 10;
             const limit = Number(query.limit) ? Number(query.limit) : 5;
             const allCollaborators = await ServiceCollaborator.getAll(status, page, limit);
+            console.log(allCollaborators);
             response.status(200).json(allCollaborators);
         }
         catch (error) {
@@ -45,4 +46,3 @@ export class ControllerCollaboratorInner {
         }
     }
 }
-//# sourceMappingURL=CollaboratorInterno.js.map

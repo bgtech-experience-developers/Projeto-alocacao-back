@@ -1,11 +1,11 @@
-import { CollaboratorError } from "../error/CollaboratorError.js";
+import { SafeError } from "../error/CollaboratorError.js";
 export const handleError = (error, request, response, next // duas camadas
 ) => {
-    if (error instanceof CollaboratorError) {
-        response.status(error.status).json({ message: error.message });
+    if (error instanceof SafeError) {
+        error.logError();
+        error.sendErrorResponse(response);
         return;
     }
-    console.log(error);
-    response.status(500).json("erro interno de servidor");
+    console.error(error);
+    response.status(500).json("erro interno no servidor");
 };
-//# sourceMappingURL=HandleError.js.map

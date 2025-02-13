@@ -27,4 +27,3 @@ export class AdminController {
     async del() { }
     async update() { }
 }
-//# sourceMappingURL=AdminCollaborator.js.map

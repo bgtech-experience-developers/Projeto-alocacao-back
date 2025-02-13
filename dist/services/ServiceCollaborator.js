@@ -16,14 +16,12 @@ export class ServiceCollaborator {
     }
     static async getAll(status, page, limit, queryStatus = 1) {
         try {
-            console.log(status);
             if (status) {
                 queryStatus = status === "true" ? 1 : 0;
             }
             else {
                 queryStatus = null;
             }
-            console.log(queryStatus);
             return await instanceColaboratorRepository.getAll(queryStatus, page, limit);
         }
         catch (error) {
@@ -56,4 +54,3 @@ export class ServiceCollaborator {
         }
     }
 }
-//# sourceMappingURL=ServiceCollaborator.js.map

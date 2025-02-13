@@ -7,4 +7,3 @@ export class HashSenha {
         return byript.hashSync(passwordplan, salts);
     }
 }
-//# sourceMappingURL=Bycrpt.js.map

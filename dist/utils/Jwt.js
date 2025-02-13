@@ -20,4 +20,3 @@ export class JwtToken {
     }
     static async verifyToken() { }
 }
-//# sourceMappingURL=Jwt.js.map

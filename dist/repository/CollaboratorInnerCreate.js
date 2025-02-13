@@ -28,10 +28,11 @@ export class CollaboratorInnerRepository {
             console.log(limit);
             const registerColaboraters = await this.connection
                 .$queryRaw `SELECT c.cell_phone1,c.cell_phone2,c.phone2,c.phone1,c1.type,c.name,c.email FROM colaborator c LEFT JOIN colaborar.colaborador_interno AS c1 ON c.id = c1.colaboratorId WHERE c.status = ${typeof status === "number" ? status : 1}
-       OR c.status =${typeof status === "number" ? status : 0}  LIMIT ${limit} OFFSET ${page}`;
+       OR c.status =${typeof status === "number" ? status : 0} `;
             // const registerColaboraters = await this.connection.colaborator.findMany({
             //   include: { colaborator_inner: { select: { type: true } } },
             // }); caso queira utilizar uma orm para fazer a query siga esse padrão
+            console.log(registerColaboraters);
             return registerColaboraters;
         }
         catch (error) {
@@ -43,14 +44,26 @@ export class CollaboratorInnerRepository {
             if (id) {
                 const register = await this.connection.colaborator.findUnique({
                     where: { id },
-                    include: { colaborator_inner: true },
+                    include: {
+                        colaborator_inner: {
+                            include: {
+                                colaborator_inner_address: { include: { address: true } },
+                            },
+                        },
+                    },
                 });
                 return register;
             }
             else {
                 const register = await this.connection.colaborator.findFirst({
                     where: { cpf },
-                    include: { colaborator_inner: true },
+                    include: {
+                        colaborator_inner: {
+                            include: {
+                                colaborator_inner_address: { include: { address: true } },
+                            },
+                        },
+                    },
                 });
                 return register;
             }
@@ -91,4 +104,3 @@ export class CollaboratorInnerRepository {
         //futuramente implementado
     }
 }
-//# sourceMappingURL=CollaboratorInnerCreate.js.map
