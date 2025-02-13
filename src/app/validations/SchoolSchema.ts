@@ -1,6 +1,6 @@
 import { Schema } from "joi";
 import joi from "joi";
-import { BaseSchema } from "./abstractBaseSchema.js";
+import { BaseSchema } from "./AbstractBaseSchema.js";
 import { join } from "@prisma/client/runtime/library";
 export interface room {
   floor: string;
