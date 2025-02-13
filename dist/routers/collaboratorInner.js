@@ -12,4 +12,3 @@ route.patch("/atualizar", () => {
     "futuramente vc me aguarda";
 });
 route.use(handleError);
-//# sourceMappingURL=collaboratorInner.js.map

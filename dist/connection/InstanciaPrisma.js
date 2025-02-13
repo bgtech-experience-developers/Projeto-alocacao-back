@@ -7,4 +7,3 @@ export class InstanciaPrismas {
             : (this.instaciaprisma = new PrismaClient());
     }
 }
-//# sourceMappingURL=InstanciaPrisma.js.map

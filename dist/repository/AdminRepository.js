@@ -33,4 +33,3 @@ export class AdminRepository {
     async getAllAdmins() { }
     async delunique() { }
 }
-//# sourceMappingURL=AdminRepository.js.map
