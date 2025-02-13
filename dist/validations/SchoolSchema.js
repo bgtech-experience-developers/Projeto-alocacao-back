@@ -1,5 +1,5 @@
 import joi from "joi";
-import { BaseSchema } from "./abstractBaseSchema.js";
+import { BaseSchema } from "./AbstractBaseSchema.js";
 export class SchoolSchema extends BaseSchema {
     getSchema() {
         const schemaRoom = joi.object({

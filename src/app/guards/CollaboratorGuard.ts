@@ -6,8 +6,7 @@ import { join, objectEnumNames } from "@prisma/client/runtime/library";
 import { Admin } from "../repository/AdminRepository.js";
 
 import Joi from "joi";
-import { colaborator, colaborator_inner } from "@prisma/client";
-import { CollaboratorInnerRepository } from "../repository/CollaboratorInnerCreate.js";
+
 
 export class TypeGuardCollaboratorInner {
   async typeGuardCollaboratorInnerCreate({
