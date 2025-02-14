@@ -1,6 +1,7 @@
 import { NextFunction, Response, Request } from "express";
 import { schoolSchema } from "../validations/SchoolSchema.js";
 import { SchoolService } from "../services/SchoolService.js";
+import { filterQuery } from "../validations/schemaQueryFilter.js";
 
 export class SchoolController {
   static schoolService: SchoolService = new SchoolService();
@@ -19,4 +20,14 @@ export class SchoolController {
       next(errr);
     }
   }
+  static async AdaptiveFilterSchool( request: Request<any,any,any,filterQuery>,
+    response: Response,
+    next: NextFunction){
+      const query = request.query
+      const recordList = ''
+      response.status(200).json(recordList)
+      return;
+
+
+    }
 }

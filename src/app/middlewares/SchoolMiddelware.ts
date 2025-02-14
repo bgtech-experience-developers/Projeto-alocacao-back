@@ -2,8 +2,10 @@ import { NextFunction, Request, Response } from "express";
 import { schoolSchema } from "../validations/SchoolSchema.js";
 import { SchoolSchema } from "../validations/SchoolSchema.js";
 import { SafeError } from "../error/CollaboratorError.js";
+import { SchemaFilterQuery } from "../validations/schemaQueryFilter.js";
+import { BaseMiddleware } from "./BaseMiddleware.js";
 
-export class SchoolMiddleware {
+export class SchoolMiddleware extends BaseMiddleware {
   private static SchoolSchema: SchoolSchema = new SchoolSchema();
   static async schoolValidator(
     request: Request,
@@ -29,4 +31,5 @@ export class SchoolMiddleware {
       next(error);
     }
   }
+  
 }
