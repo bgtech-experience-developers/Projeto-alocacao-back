@@ -7,6 +7,7 @@ export interface Admin {
 }
 export class AdminRepository {
   private connectionDb = InstanciaPrismas.createConnection();
+  
   async create({ name, password, email }: Admin, permisions: number[]) {
     try {
       const result = this.connectionDb.$transaction(async (tsx) => {

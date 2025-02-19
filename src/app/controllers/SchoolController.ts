@@ -20,9 +20,10 @@ export class SchoolController {
     }
   }
 
-  static async getAll(request: Request, response: Response, next: NextFunction) {
+  static async getAll(request: Request<any, any, any, {limit: string, offset: string}>, response: Response, next: NextFunction) {
     try { 
-      await SchoolService.getAll();
+
+      return await SchoolService.getAll(request.query.limit, request.query.offset);
     } catch(error) {
       next(error);
     }
