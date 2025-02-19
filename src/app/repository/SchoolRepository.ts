@@ -62,7 +62,10 @@ export class SchoolRepository {
       const [school, class_room, school_address] =  await SchoolRepository.connection.$transaction(
         [
            SchoolRepository.connection.school.findMany({
+            take: limit,
+            skip: offset,
             select: {
+              id: true,
               cnpj: true,
               answerable_school: true
             }
