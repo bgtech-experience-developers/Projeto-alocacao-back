@@ -25,6 +25,7 @@ export class AdminRepository {
       throw error;
     }
   }
+  
   async getUnique(id: undefined, email: string): Promise<admin>;
   async getUnique(
     id?: number,

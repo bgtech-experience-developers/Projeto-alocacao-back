@@ -19,4 +19,12 @@ export class SchoolController {
       next(errr);
     }
   }
+
+  static async getAll(request: Request, response: Response, next: NextFunction) {
+    try { 
+      await SchoolService.getAll();
+    } catch(error) {
+      next(error);
+    }
+  }
 }

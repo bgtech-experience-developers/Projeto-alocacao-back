@@ -1,9 +1,12 @@
 import { InstanciaPrismas } from "../connection/InstanciaPrisma.js";
 export class SchoolRepository {
-    connection = InstanciaPrismas.createConnection();
+    static getSchoolByCnpj(cnpj) {
+        throw new Error("Method not implemented.");
+    }
+    static connection = InstanciaPrismas.createConnection();
     async getSchoolByCnpj(cnpj) {
         try {
-            return await this.connection.school.findFirst({ where: { cnpj } });
+            return await SchoolRepository.connection.school.findFirst({ where: { cnpj } });
         }
         catch (error) {
             throw error;
@@ -11,7 +14,7 @@ export class SchoolRepository {
     }
     async setSchool(schoolBody) {
         try {
-            const register = await this.connection.$transaction(async (tsx) => {
+            const register = await SchoolRepository.connection.$transaction(async (tsx) => {
                 const addressRegister = await tsx.address.create({
                     data: {
                         cep: schoolBody.cep,
@@ -45,6 +48,34 @@ export class SchoolRepository {
                 return "escola cadastrada com sucesso";
             });
             return register;
+        }
+        catch (error) {
+            throw error;
+        }
+    }
+    static async getAll(limit, offset) {
+        try {
+            const [school, class_room, school_address] = await SchoolRepository.connection.$transaction([
+                SchoolRepository.connection.school.findMany({
+                    select: {
+                        cnpj: true,
+                        answerable_school: true
+                    }
+                }),
+                SchoolRepository.connection.class_room.findMany({
+                    select: {
+                        amount_chair: true
+                    }
+                }),
+                SchoolRepository.connection.address.findMany({
+                    select: {
+                        street: true
+                    }
+                })
+            ]);
+            console.log(school);
+            console.log(class_room);
+            console.log(school_address);
         }
         catch (error) {
             throw error;

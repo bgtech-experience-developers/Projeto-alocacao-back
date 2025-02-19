@@ -4,7 +4,7 @@ import express from "express";
 
 import { adminRouter } from "./routers/admin.js";
 import SwaggerUiOptions from "swagger-ui-express";
-import swaggerDocs from "./docs/swagger.json" assert { type: "json" };
+import swaggerDocs from "./docs/swagger.json" with { type: "json" };
 import { schoolRoute } from "./routers/school.js";
 import { handleError } from "./middlewares/HandleError.js";
 

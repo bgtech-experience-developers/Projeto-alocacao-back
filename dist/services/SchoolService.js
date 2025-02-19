@@ -14,4 +14,12 @@ export class SchoolService {
             throw error;
         }
     }
+    static async getAll() {
+        try {
+            await SchoolRepository.getAll(1, 2);
+        }
+        catch (error) {
+            throw error;
+        }
+    }
 }

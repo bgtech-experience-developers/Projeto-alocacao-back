@@ -9,3 +9,5 @@ schoolRoute.post(
   SchoolMiddleware.schoolValidator.bind(SchoolMiddleware),
   SchoolController.setSchool.bind(SchoolController)
 );
+
+schoolRoute.get("/getall", SchoolController.getAll);

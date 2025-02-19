@@ -22,6 +22,7 @@ export interface schoolSchema {
   city: string;
   room: room[];
 }
+
 export class SchoolSchema extends BaseSchema {
   getSchema(): Schema {
     const schemaRoom = joi.object<room, true, room>({
