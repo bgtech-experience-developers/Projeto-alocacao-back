@@ -10,4 +10,4 @@ schoolRoute.post(
   SchoolController.setSchool.bind(SchoolController)
 );
 
-schoolRoute.get("/getall", SchoolController.getAll);
+schoolRoute.get("/", SchoolController.getAll);

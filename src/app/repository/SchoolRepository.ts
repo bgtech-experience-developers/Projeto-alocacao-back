@@ -71,11 +71,15 @@ export class SchoolRepository {
             }
           }),
            SchoolRepository.connection.class_room.findMany({
+            take: limit,
+            skip: offset,
             select: {
               amount_chair: true
             }
           }),
           SchoolRepository.connection.address.findMany({
+            take: limit,
+            skip: offset,
             select: {
               street: true
             }
@@ -83,12 +87,12 @@ export class SchoolRepository {
 
         ]
       )
-      console.log(school);
-      console.log(class_room);
-      console.log(school_address);
-      
-      
-      
+
+      return {
+        school,
+        class_room,
+        school_address
+      }
     } catch(error) {
       throw error;
     }

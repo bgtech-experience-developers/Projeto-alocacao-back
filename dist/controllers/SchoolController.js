@@ -13,7 +13,9 @@ export class SchoolController {
     }
     static async getAll(request, response, next) {
         try {
-            return await SchoolService.getAll(request.query.limit, request.query.offset);
+            await SchoolService.getAll(request.query.limit, request.query.offset);
+            response.status(200).json();
+            return;
         }
         catch (error) {
             next(error);

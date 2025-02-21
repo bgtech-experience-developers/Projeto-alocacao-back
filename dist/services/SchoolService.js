@@ -18,7 +18,7 @@ export class SchoolService {
         try {
             limit = Number(limit) || 10;
             offset = Number(limit) || 0;
-            await SchoolRepository.getAll(1, 2);
+            return await SchoolRepository.getAll(limit, offset);
         }
         catch (error) {
             throw error;
