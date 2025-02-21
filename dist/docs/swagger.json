@@ -7,5 +7,116 @@
     },
     "servers": [
         { "url": "http://localhost:3000", "description": "rota da api local" }
-    ]
+    ],
+    "tags": [
+        {
+            "name": "Escolas",
+            "description": "Endpoints relacionados à gestão de produtos"
+        }
+    ],
+    "paths": {
+        "/escolas": {
+            "get": {
+                "summary": "Retorna os registros de forma paginada",
+                "description": "Esse endpoint será usado no dashboard de escolas",
+                "tags": [
+                    "Escolas"
+                ],
+                "parameters": [
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Número de registros a serem retornados",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "minimum": 1
+                        },
+                        "example": "/produtos/?limit=2"
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "Número de registros a serem ignorados",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "minimum": 0
+                        },
+                        "example": "/produtos/?limit=2&offset=0"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de escolas",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "id": {
+                                                "type": "number"
+                                            },
+                                            "cnpj": {
+                                                "type": "string"
+                                            },
+                                            "answerable_school": {
+                                                "type": "string"
+                                            },
+                                            "class_room": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "amount_chair": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            },
+                                            "school_address": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "street": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "examples": {
+                                    "Example 1": {
+                                        "value": [
+                                            {
+                                                "id": 3,
+                                                "cnpj": "97812952340116",
+                                                "answerable_school": "SammieMayer",
+                                                "class_room": {
+                                                    "amount_chair": "36"
+                                                },
+                                                "school_address": {
+                                                    "street": "Stokes Mountain"
+                                                }
+                                            },
+                                            {
+                                                "id": 4,
+                                                "cnpj": "97811626902926",
+                                                "answerable_school": "RosamondHeller",
+                                                "class_room": {
+                                                    "amount_chair": "97"
+                                                },
+                                                "school_address": {
+                                                    "street": "Jayme Ridge"
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

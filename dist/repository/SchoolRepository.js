@@ -55,36 +55,30 @@ export class SchoolRepository {
     }
     static async getAll(limit, offset) {
         try {
-            const [school, class_room, school_address] = await SchoolRepository.connection.$transaction([
-                SchoolRepository.connection.school.findMany({
-                    take: limit,
-                    skip: offset,
-                    select: {
-                        id: true,
-                        cnpj: true,
-                        answerable_school: true
+            const schoolAll = await SchoolRepository.connection.school.findMany({
+                take: limit,
+                skip: offset,
+                select: {
+                    id: true,
+                    cnpj: true,
+                    answerable_school: true,
+                    class_room: {
+                        select: {
+                            amount_chair: true,
+                        }
+                    },
+                    school_address: {
+                        select: {
+                            address: {
+                                select: {
+                                    street: true
+                                }
+                            }
+                        }
                     }
-                }),
-                SchoolRepository.connection.class_room.findMany({
-                    take: limit,
-                    skip: offset,
-                    select: {
-                        amount_chair: true
-                    }
-                }),
-                SchoolRepository.connection.address.findMany({
-                    take: limit,
-                    skip: offset,
-                    select: {
-                        street: true
-                    }
-                })
-            ]);
-            return {
-                school,
-                class_room,
-                school_address
-            };
+                }
+            });
+            return schoolAll;
         }
         catch (error) {
             throw error;

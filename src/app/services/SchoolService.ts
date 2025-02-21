@@ -20,10 +20,19 @@ export class SchoolService {
 
   static async getAll(limit: number | string, offset: number | string) {
     try {
-        limit = Number(limit) || 10;
+        limit = Number(limit) || 2;
         offset = Number(limit) || 0;
-        return await SchoolRepository.getAll(limit, offset);
-      
+        const schoolAll = await SchoolRepository.getAll(limit, offset);
+        
+        const newArray = schoolAll.map((school) => ({
+          id: school.id,
+          cnpj: school.cnpj,
+          answerable_school: school.answerable_school,
+          class_room: school.class_room[0],
+          school_address: school.school_address[0].address
+
+        }))
+        return newArray
         
     } catch(error) {
       throw error;
