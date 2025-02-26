@@ -11,3 +11,4 @@ schoolRoute.post(
 );
 
 schoolRoute.get("/", SchoolController.getAll);
+schoolRoute.patch("/:id",SchoolMiddleware.schoolUpdate.bind(SchoolMiddleware), SchoolController.update)

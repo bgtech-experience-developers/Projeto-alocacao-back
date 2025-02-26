@@ -84,4 +84,49 @@ export class SchoolRepository {
             throw error;
         }
     }
+    static async getByID(id) {
+        try {
+            return this.connection.school.findFirst({
+                where: {
+                    id
+                }
+            });
+        }
+        catch (error) {
+            throw error;
+        }
+    }
+    static async update(id, school) {
+        try {
+            return await this.connection.school.update({
+                where: {
+                    id
+                },
+                data: {
+                    name_school: school.name_school,
+                    cnpj: school.cnpj,
+                    answerable_school: school.answerable_school,
+                    answerable_email: school.answerable_email,
+                    answerable_phone: school.answerable_phone,
+                    school_address: {
+                        create: {
+                            address: {
+                                create: {
+                                    number: school.number,
+                                    street: school.street,
+                                    cep: school.cep,
+                                    neighborhood: school.neighborhood,
+                                    state: school.state,
+                                    city: school.city,
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        catch (error) {
+            throw error;
+        }
+    }
 }

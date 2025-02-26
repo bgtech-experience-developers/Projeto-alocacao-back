@@ -8,4 +8,13 @@ export class BaseSchema {
             throw error;
         }
     }
+    async validateUpdate(data) {
+        try {
+            const schema = this.update();
+            return schema.validate(data);
+        }
+        catch (error) {
+            throw error;
+        }
+    }
 }

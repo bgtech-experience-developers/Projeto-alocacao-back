@@ -31,4 +31,17 @@ export class SchoolController {
       next(error);
     }
   }
+
+  static async update(request: Request<{id: string}, any, UpdateSchool, any>, response: Response, next: NextFunction) {
+    try {
+      const result = await SchoolService.update(Number(request.params.id), request.body);
+
+      response.status(200).json(result);
+      return;
+    } catch(error) {
+      next(error);
+    }
+    
+    
+  }
 }

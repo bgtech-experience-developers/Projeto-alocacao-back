@@ -32,4 +32,15 @@ export class SchoolService {
             throw error;
         }
     }
+    static async update(id, school) {
+        try {
+            const schoolIsExist = await SchoolRepository.getByID(id);
+            if (!schoolIsExist)
+                throw new SafeError("Escola não cadastrada no sistema!", 404);
+            await SchoolRepository.update(id, school);
+        }
+        catch (error) {
+            throw error;
+        }
+    }
 }

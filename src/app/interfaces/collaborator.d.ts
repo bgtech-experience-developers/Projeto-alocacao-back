@@ -98,3 +98,17 @@ interface AllInterfaces {
   };
   casinha: number;
 }
+
+interface UpdateSchool {
+  name_school: string,
+  cnpj: string,
+  answerable_school: string,
+  answerable_phone: string,
+  answerable_email: string,
+  number: (null | string),
+  street: (null | string),
+  cep: (null | string),
+  neighborhood: (null | string),
+  state: (null | string),
+  city: (null | string)
+}

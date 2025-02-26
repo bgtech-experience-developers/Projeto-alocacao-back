@@ -60,4 +60,24 @@ export class SchoolSchema extends BaseSchema {
       }),
     });
   }
+
+  update (): Schema {
+    
+    return joi.object<UpdateSchool, true, UpdateSchool> ({
+      name_school: joi.string().trim().allow(""),
+      cnpj: joi.string().trim().max(14).min(14).required().messages({
+        "string.max": "o campo cnpj deve conter no maximo 14 digitos",
+        "string.min": "o campo cnpj deve conter pelo menos 14 digitos"
+      }),
+      answerable_school: joi.string().trim().allow(""),
+      answerable_email: joi.string().trim().allow(""),
+      answerable_phone: joi.string().trim().allow(""),
+      number: joi.string().trim().allow(""),
+      street: joi.string().trim().allow(""),
+      cep: joi.string().trim().allow(""),
+      neighborhood: joi.string().trim().allow(""),
+      state: joi.string().trim().allow(""),
+      city: joi.string().trim().allow("")
+    })
+  }
 }

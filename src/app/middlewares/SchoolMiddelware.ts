@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { schoolSchema } from "../validations/SchoolSchema.js";
 import { SchoolSchema } from "../validations/SchoolSchema.js";
 import { SafeError } from "../error/CollaboratorError.js";
+import sanitazeUpdate from "../utils/sanitaze.js";
 
 export class SchoolMiddleware {
   private static SchoolSchema: SchoolSchema = new SchoolSchema();
@@ -26,6 +27,26 @@ export class SchoolMiddleware {
       }
       next();
     } catch (error) {
+      next(error);
+    }
+  }
+
+  static async schoolUpdate(request: Request<any, any, UpdateSchool, any>, response: Response, next: NextFunction) {
+    try {
+      const schema = request.body;
+      
+      sanitazeUpdate(schema);
+      console.log(schema);
+      // console.log('Dados sanitizados');
+      
+      const {error, value} = await this.SchoolSchema.validateUpdate(schema);
+      if(error) {
+        throw new SafeError('O esquema está inválido', 400);       
+      }
+      
+      
+      next()
+    } catch(error) {
       next(error);
     }
   }

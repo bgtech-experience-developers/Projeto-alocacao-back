@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import { InstanciaPrismas } from "../connection/InstanciaPrisma.js";
 import { SchoolSchema, schoolSchema } from "../validations/SchoolSchema.js";
+import { SafeError } from "../error/CollaboratorError.js";
 
 export class SchoolRepository {
   static getSchoolByCnpj(cnpj: string) {
@@ -86,6 +87,52 @@ export class SchoolRepository {
       return schoolAll;
     } catch(error) {
       throw error;
+    }
+  }
+
+  static async getByID(id: number) {
+    try {
+      return this.connection.school.findFirst({
+        where: {
+          id
+        }
+      })
+    } catch(error) {
+      throw error;
+    }
+  }
+
+  static async update(id:number, school: UpdateSchool) {
+    try {
+      return await this.connection.school.update({
+        where: {
+          id
+        },
+        data: {
+          name_school: school.name_school,
+          cnpj: school.cnpj,
+          answerable_school: school.answerable_school,
+          answerable_email: school.answerable_email,
+          answerable_phone: school.answerable_phone,
+          school_address: {
+            create: {
+              address: {
+                create: {
+                  number: school.number,
+                  street: school.street,
+                  cep: school.cep,
+                  neighborhood: school.neighborhood,
+                  state: school.state,
+                  city: school.city,
+
+                }
+              }
+            }
+          }
+        }
+      })
+    } catch (error) {
+        throw error
     }
   }
 }
